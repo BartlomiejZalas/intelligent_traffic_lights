@@ -25,18 +25,18 @@ public class Normalizer {
     }
 
     public double normalizeValue(double input) {
-        return (input - min) / max;
+        return (input - min) / (max - min) * 0.8 + 0.1;
     }
 
     public double deNormalizeValue(double input) {
-        return (input * max) + min;
+        return min + (input * (max - min) - 0.1) / 0.8;
     }
 
     private void findMin(ArrayList<Double> deNormalizedValues) {
-        min = Collections.min(deNormalizedValues) * 0.8;
+        min = Collections.min(deNormalizedValues);
     }
 
     private void findMax(ArrayList<Double> deNormalizedValues) {
-        max = Collections.max(deNormalizedValues) * 1.2;
+        max = Collections.max(deNormalizedValues);
     }
 }
