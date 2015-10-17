@@ -29,7 +29,7 @@ public class Normalizer {
     }
 
     public double deNormalizeValue(double input) {
-        return (input * max) +min;
+        return (input * max) + min;
     }
 
     private void findMin(ArrayList<Double> deNormalizedValues) {

@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 
 public class NeuralNetworkPredictor {
 
@@ -26,6 +27,9 @@ public class NeuralNetworkPredictor {
     private LearningData learningData;
     private NeuralNetwork<BackPropagation> neuralNetwork;
     private Normalizer normalizer;
+
+    private double max = 0;
+    private double min = Double.MAX_VALUE;
 
     public NeuralNetworkPredictor(int slidingWindowSize, File rawDataFile) {
         this.rawDataFile = rawDataFile;
@@ -44,23 +48,33 @@ public class NeuralNetworkPredictor {
         testNetwork();
     }
 
+    double normalizeValue(double input) {
+        return (input - min) / (max - min) * 0.8 + 0.1;
+    }
+
+    double deNormalizeValue(double input) {
+        return min + (input * (max - min) - 0.1) / 0.8;
+    }
+
     void prepareData() throws Exception {
 
         CsvLineReader csvLineReader = new CsvLineReader();
         ArrayList<Double> values = csvLineReader.getValuesFromColumn(rawDataFile, 1);
-        normalizer = new Normalizer(values);
-        ArrayList<Double> normalizedValues = normalizer.normalizeValues();
 
+        min = Collections.min(values);
+        max = Collections.max(values);
 
-        for (int i = 0; i < normalizedValues.size() - (slidingWindowSize + 1); i++) {
+//        normalizer = new Normalizer(values);
+//        ArrayList<Double> normalizedValues = normalizer.normalizeValues();
+
+        for (int i = 0; i < values.size() - slidingWindowSize; i++) {
             double[] trainingArray = new double[slidingWindowSize];
             for (int w = 0; w < slidingWindowSize; w++) {
-                trainingArray[w] = normalizedValues.get(i + w);
+                trainingArray[w] = normalizeValue(values.get(i + w));
             }
-            System.out.println(Arrays.toString(trainingArray) + "->" + normalizedValues.get(i + slidingWindowSize));
-            learningData.addRow(trainingArray, normalizedValues.get(i + slidingWindowSize));
+            System.out.println(Arrays.toString(trainingArray) + "->" + values.get(i + slidingWindowSize));
+            learningData.addRow(trainingArray, normalizeValue(values.get(i + slidingWindowSize)));
         }
-
     }
 
     void trainNetwork() throws IOException, URISyntaxException {
@@ -89,20 +103,20 @@ public class NeuralNetworkPredictor {
         for (int i = 0; i < learningData.countRows(); i++) {
             double[] trainValues = learningData.getRow(i).getDataToLearn();
             double expectedValue[] = new double[]{learningData.getRow(i).getExpectedValue()};
-            trainicd cd ngSet.addRow(new DataSetRow(trainValues, expectedValue));
+            trainingSet.addRow(new DataSetRow(trainValues, expectedValue));
         }
         return trainingSet;
     }
 
     void testNetwork() throws URISyntaxException {
-        neuralNetwork.setInput(normalizer.normalizeValue(2056.15),
-                normalizer.normalizeValue(2061.02), normalizer.normalizeValue(2086.24),
-                normalizer.normalizeValue(2067.89), normalizer.normalizeValue(2059.69));
+        neuralNetwork.setInput(normalizeValue(2056.15),
+                normalizeValue(2061.02), normalizeValue(2086.24),
+                normalizeValue(2067.89), normalizeValue(2059.69));
 
         neuralNetwork.calculate();
         double[] networkOutput = neuralNetwork.getOutput();
-        System.out.println("Expected value  : 2066.96");
-        System.out.println("Predicted value : " + normalizer.deNormalizeValue(networkOutput[0]));
+        System.out.println("Expected value  : "+ 2066.96);
+        System.out.println("Predicted value : " + deNormalizeValue(networkOutput[0]));
     }
 
 }
