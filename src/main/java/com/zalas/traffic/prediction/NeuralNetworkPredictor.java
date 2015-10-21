@@ -8,7 +8,6 @@ import org.neuroph.core.learning.SupervisedLearning;
 import org.neuroph.nnet.MultiLayerPerceptron;
 import org.neuroph.nnet.learning.BackPropagation;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
