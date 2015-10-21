@@ -8,39 +8,39 @@ import java.util.Arrays;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-public class NormalizerTest {
+public class NormalizedValuesTest {
 
     private static final double MIN_VALUE = 1.0;
     private static final double MAX_VALUE = 6.0;
     private final static ArrayList<Double> VALUES =
             new ArrayList<Double>(Arrays.asList(3.8, MIN_VALUE, 2.5, 2.6, MAX_VALUE, 5.0));
 
-    private Normalizer normalizer;
+    private NormalizedValues normalizedValues;
 
     @Test
     public void normalizeValue_shouldReturnNormalizedValue() throws Exception {
-        normalizer = new Normalizer(VALUES);
-        assertEquals(0.02, normalizer.normalizeValue(MIN_VALUE), 0.1);
-        assertEquals(0.7, normalizer.normalizeValue(MAX_VALUE), 0.1);
+        normalizedValues = new NormalizedValues(VALUES);
+        assertTrue(normalizedValues.normalizeValue(3.8) > 0.1);
+        assertTrue(normalizedValues.normalizeValue(3.8) < 0.9);
     }
 
     @Test
     public void deNormalizeValue_shouldReturnDeNormalizedValue() throws Exception {
-        normalizer = new Normalizer(VALUES);
-        assertEquals(MIN_VALUE, normalizer.deNormalizeValue(normalizer.normalizeValue(MIN_VALUE)), 0.1);
-        assertEquals(MAX_VALUE, normalizer.deNormalizeValue(normalizer.normalizeValue(MAX_VALUE)), 0.1);
+        normalizedValues = new NormalizedValues(VALUES);
+        assertTrue(normalizedValues.deNormalizeValue(0.5) >= MIN_VALUE);
+        assertTrue(normalizedValues.deNormalizeValue(0.5) <= MAX_VALUE);
     }
 
     @Test
     public void normalizeValues_shouldReturnValuesAsNormalized_whenMinIsDotOneAndMaxIsDotNine() throws Exception {
-        normalizer = new Normalizer(VALUES);
-        assertNormalization(normalizer.normalizeValues());
+        normalizedValues = new NormalizedValues(VALUES);
+        assertNormalization(normalizedValues.normalizeValues());
     }
 
     @Test
     public void normalizeValues_shouldReturnValuesAsNormalized_whenMinIsZeroAndMaxIsOne() throws Exception {
-        normalizer = new Normalizer(VALUES);
-        assertNormalization(normalizer.normalizeValues());
+        normalizedValues = new NormalizedValues(VALUES);
+        assertNormalization(normalizedValues.normalizeValues());
     }
 
     private void assertNormalization(ArrayList<Double> normalized) {

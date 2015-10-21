@@ -3,14 +3,14 @@ package com.zalas.traffic.prediction.normalization;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class Normalizer {
+public class NormalizedValues {
 
     private double max;
     private double min;
 
     private ArrayList<Double> deNormalizedValues;
 
-    public Normalizer(ArrayList<Double> deNormalizedValues) {
+    public NormalizedValues(ArrayList<Double> deNormalizedValues) {
         this.deNormalizedValues = deNormalizedValues;
         findMax(deNormalizedValues);
         findMin(deNormalizedValues);
