@@ -83,5 +83,20 @@ public class NeuralNetworkPredictor {
         neuralNetwork.learn(learningData);
     }
 
+    public NeuralNetwork<BackPropagation> getNeuralNetwork() {
+        return neuralNetwork;
+    }
+
+    public void setNeuralNetwork(NeuralNetwork<BackPropagation> neuralNetwork) {
+        this.neuralNetwork = neuralNetwork;
+    }
+
+    public NormalizedValues getNormalizedValues() {
+        return normalizedValues;
+    }
+
+    public DataSet getLearningData() {
+        return learningData;
+    }
 }
 

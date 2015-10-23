@@ -10,7 +10,7 @@ public class CsvLineReader {
 
     public ArrayList<Double> getValuesFromColumn(File csvFile, int column) throws IOException {
 
-        ArrayList<Double> values = new ArrayList<Double>();
+        ArrayList<Double> values = new ArrayList<>();
         BufferedReader reader = new BufferedReader(new FileReader(csvFile));
 
         try {

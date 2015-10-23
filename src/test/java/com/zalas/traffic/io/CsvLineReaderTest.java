@@ -19,7 +19,7 @@ public class CsvLineReaderTest {
 
     @Test
     public void getLine_shouldReturnLines_whenFileGiven() throws Exception {
-        File testCsvFile = new File(getClass().getResource("/rawTestData.csv").toURI());
+        File testCsvFile = new File(getClass().getResource("/testRawTestData.csv").toURI());
         ArrayList<Double> values = csvLineReader.getValuesFromColumn(testCsvFile, 1);
 
         assertEquals(values.get(0), 1419.04, 0.01);
