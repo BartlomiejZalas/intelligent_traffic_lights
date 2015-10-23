@@ -16,6 +16,7 @@ public class Launcher {
         NeuralNetworkPredictor predictor = factory.create("/rawTrainingData.csv", 6);
         predictor.train();
         predictor.test();
+//        predictor.getPrediction();
     }
 
 
