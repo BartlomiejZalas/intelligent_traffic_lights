@@ -34,24 +34,13 @@ public class NeuralNetworkPredictor {
         trainNetwork();
     }
 
-    public double getPrediction() {
-        neuralNetwork.setInput(
-                normalizedValues.normalizeValue(2061.05),
-                normalizedValues.normalizeValue(2056.15),
-                normalizedValues.normalizeValue(2061.02),
-                normalizedValues.normalizeValue(2086.24),
-                normalizedValues.normalizeValue(2067.89),
-                normalizedValues.normalizeValue(2059.69)
-        );
+    public double getPrediction(double... values) {
+        for(int i = 0; i < values.length; i++) {
+            values[i] = normalizedValues.normalizeValue(values[i]);
+        }
+        neuralNetwork.setInput(values);
         neuralNetwork.calculate();
-        double[] networkOutput = neuralNetwork.getOutput();
-        return networkOutput[0];
-    }
-
-    public void test() {
-        double networkOutput = getPrediction();
-        System.out.println("Expected value  : " + 2066.96);
-        System.out.println("Predicted value : " + normalizedValues.deNormalizeValue(networkOutput));
+        return normalizedValues.deNormalizeValue(neuralNetwork.getOutput()[0]);
     }
 
     private void prepareData() throws IOException {

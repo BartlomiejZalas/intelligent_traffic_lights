@@ -14,12 +14,13 @@ public class Launcher {
     public void run() throws Exception {
 
         NeuralNetworkPredictorFactory factory = new NeuralNetworkPredictorFactory();
-        File inputData = new File(getClass().getResource("/rawTrainingData.csv").toURI());
+        File inputFile = new File(getClass().getResource("/rawTrainingData.csv").toURI());
 
-        NeuralNetworkPredictor predictor = factory.create(inputData, 6);
+        NeuralNetworkPredictor predictor = factory.create(inputFile, 6);
         predictor.train();
-        predictor.test();
-//        predictor.getPrediction();
+        double prediction = predictor.getPrediction(new double[]{2061.05, 2056.15, 2061.02, 2086.24, 2067.89, 2059.69});
+        System.out.println("Expected value: " + 2066.96);
+        System.out.println("Prediction:     " + prediction);
     }
 
 

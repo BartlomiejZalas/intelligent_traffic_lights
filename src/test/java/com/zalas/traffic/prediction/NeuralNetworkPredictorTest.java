@@ -44,10 +44,11 @@ public class NeuralNetworkPredictorTest {
     public void getPrediction_shouldDelegateToNeuralNetworkAndReturnValue() throws Exception {
         NeuralNetworkPredictor neuralNetworkPredictor = new NeuralNetworkPredictor(LEARNING_SET_SIZE, normalizer);
         given(neuralNetwork.getOutput()).willReturn(new double[]{OUTPUT_VALUE});
+        given(normalizer.deNormalizeValue(OUTPUT_VALUE)).willReturn(OUTPUT_VALUE);
         neuralNetworkPredictor.setNeuralNetwork(neuralNetwork);
         neuralNetworkPredictor.train();
 
-        double result = neuralNetworkPredictor.getPrediction();
+        double result = neuralNetworkPredictor.getPrediction(new double[]{1});
 
         verify(neuralNetwork).calculate();
         verify(neuralNetwork).getOutput();
