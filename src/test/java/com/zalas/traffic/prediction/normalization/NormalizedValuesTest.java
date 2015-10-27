@@ -1,5 +1,6 @@
 package com.zalas.traffic.prediction.normalization;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -17,16 +18,20 @@ public class NormalizedValuesTest {
 
     private NormalizedValues normalizedValues;
 
+    @Before
+    public void setUp() throws Exception {
+        normalizedValues = new NormalizedValues(VALUES);
+
+    }
+
     @Test
     public void normalizeValue_shouldReturnNormalizedValue() throws Exception {
-        normalizedValues = new NormalizedValues(VALUES);
         assertTrue(normalizedValues.normalizeValue(3.8) > 0.1);
         assertTrue(normalizedValues.normalizeValue(3.8) < 0.9);
     }
 
     @Test
     public void deNormalizeValue_shouldReturnDeNormalizedValue() throws Exception {
-        normalizedValues = new NormalizedValues(VALUES);
         assertTrue(normalizedValues.deNormalizeValue(0.5) >= MIN_VALUE);
         assertTrue(normalizedValues.deNormalizeValue(0.5) <= MAX_VALUE);
         assertEquals(normalizedValues.deNormalizeValue(normalizedValues.normalizeValue(0.5)), 0.5, 0.1);
@@ -34,13 +39,11 @@ public class NormalizedValuesTest {
 
     @Test
     public void normalizeValues_shouldReturnValuesAsNormalized_whenMinIsDotOneAndMaxIsDotNine() throws Exception {
-        normalizedValues = new NormalizedValues(VALUES);
         assertNormalization(normalizedValues.normalizeValues());
     }
 
     @Test
     public void normalizeValues_shouldReturnValuesAsNormalized_whenMinIsZeroAndMaxIsOne() throws Exception {
-        normalizedValues = new NormalizedValues(VALUES);
         assertNormalization(normalizedValues.normalizeValues());
     }
 
