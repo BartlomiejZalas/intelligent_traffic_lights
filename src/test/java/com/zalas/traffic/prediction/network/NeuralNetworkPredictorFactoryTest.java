@@ -1,7 +1,5 @@
 package com.zalas.traffic.prediction.network;
 
-import com.zalas.traffic.prediction.network.NeuralNetworkPredictor;
-import com.zalas.traffic.prediction.network.NeuralNetworkPredictorFactory;
 import org.junit.Before;
 import org.junit.Test;
 

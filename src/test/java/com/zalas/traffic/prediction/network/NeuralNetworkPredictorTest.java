@@ -1,6 +1,5 @@
 package com.zalas.traffic.prediction.network;
 
-import com.zalas.traffic.prediction.network.NeuralNetworkPredictor;
 import com.zalas.traffic.prediction.normalization.NormalizedValues;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,7 +10,8 @@ import org.neuroph.core.data.DataSet;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import static org.junit.Assert.*;
+
+import static org.junit.Assert.assertEquals;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.verify;

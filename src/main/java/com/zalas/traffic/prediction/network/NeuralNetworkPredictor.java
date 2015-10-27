@@ -35,7 +35,7 @@ public class NeuralNetworkPredictor {
     }
 
     public double getPrediction(double... values) {
-        for(int i = 0; i < values.length; i++) {
+        for (int i = 0; i < values.length; i++) {
             values[i] = normalizedValues.normalizeValue(values[i]);
         }
         neuralNetwork.setInput(values);

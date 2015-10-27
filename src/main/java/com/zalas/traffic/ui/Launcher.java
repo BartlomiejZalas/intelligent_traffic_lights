@@ -19,7 +19,7 @@ public class Launcher {
         NeuralNetworkPredictor predictor = factory.create(inputFile, 5);
         predictor.train();
 
-        double prediction = predictor.getPrediction(new double[]{36,23,15,14,11});
+        double prediction = predictor.getPrediction(new double[]{36, 23, 15, 14, 11});
 
         System.out.println("Expected value: " + 6);
         System.out.println("Prediction:     " + prediction);
