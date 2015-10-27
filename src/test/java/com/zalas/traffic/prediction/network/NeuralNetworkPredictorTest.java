@@ -1,11 +1,10 @@
-package com.zalas.traffic.prediction;
+package com.zalas.traffic.prediction.network;
 
+import com.zalas.traffic.prediction.network.NeuralNetworkPredictor;
 import com.zalas.traffic.prediction.normalization.NormalizedValues;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.neuroph.core.NeuralNetwork;
 import org.neuroph.core.data.DataSet;

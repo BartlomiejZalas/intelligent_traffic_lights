@@ -1,7 +1,7 @@
 package com.zalas.traffic.ui;
 
-import com.zalas.traffic.prediction.NeuralNetworkPredictor;
-import com.zalas.traffic.prediction.NeuralNetworkPredictorFactory;
+import com.zalas.traffic.prediction.network.NeuralNetworkPredictor;
+import com.zalas.traffic.prediction.network.NeuralNetworkPredictorFactory;
 
 import java.io.File;
 

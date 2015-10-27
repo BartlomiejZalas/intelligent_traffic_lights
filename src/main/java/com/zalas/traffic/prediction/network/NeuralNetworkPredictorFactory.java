@@ -1,4 +1,4 @@
-package com.zalas.traffic.prediction;
+package com.zalas.traffic.prediction.network;
 
 import com.zalas.traffic.io.CsvLineReader;
 import com.zalas.traffic.prediction.normalization.NormalizedValues;
