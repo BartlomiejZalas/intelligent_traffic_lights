@@ -5,6 +5,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class NormalizedValuesTest {
@@ -28,6 +29,7 @@ public class NormalizedValuesTest {
         normalizedValues = new NormalizedValues(VALUES);
         assertTrue(normalizedValues.deNormalizeValue(0.5) >= MIN_VALUE);
         assertTrue(normalizedValues.deNormalizeValue(0.5) <= MAX_VALUE);
+        assertEquals(normalizedValues.deNormalizeValue(normalizedValues.normalizeValue(0.5)), 0.5, 0.1);
     }
 
     @Test

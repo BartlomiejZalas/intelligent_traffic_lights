@@ -25,11 +25,11 @@ public class NormalizedValues {
     }
 
     public double normalizeValue(double input) {
-        return (input - min) / (max - min) * 0.8 + 0.1;
+        return (((input - min) / (max - min)) * 0.8) + 0.1;
     }
 
     public double deNormalizeValue(double input) {
-        return min + (input * (max - min) - 0.1) / 0.8;
+        return ((min*(0.9 - input)) + (max * (input-0.1)))/0.8;
     }
 
     private void findMin(ArrayList<Double> deNormalizedValues) {

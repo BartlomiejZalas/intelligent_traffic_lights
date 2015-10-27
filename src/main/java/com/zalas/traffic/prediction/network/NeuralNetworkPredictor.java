@@ -59,7 +59,7 @@ public class NeuralNetworkPredictor {
     }
 
     private NeuralNetwork<BackPropagation> createNeuralNetwork() {
-        NeuralNetwork<BackPropagation> neuralNetwork = new MultiLayerPerceptron(slidingWindowSize, 2 * slidingWindowSize + 1, 1);
+        NeuralNetwork<BackPropagation> neuralNetwork = new MultiLayerPerceptron(slidingWindowSize, slidingWindowSize /4, 1);
         SupervisedLearning learningRule = neuralNetwork.getLearningRule();
         learningRule.setMaxError(MAX_ERROR);
         learningRule.setLearningRate(LEARNING_RATE);
