@@ -20,7 +20,7 @@ public class NeuralNetworkPredictor {
 
     private static final int MAX_ITERATIONS = 1000;
     private static final double LEARNING_RATE = 0.001;
-    private static final double MAX_ERROR = 0.001;
+    private static final double MAX_ERROR = 0.0035;
 
     public NeuralNetworkPredictor(int slidingWindowSize, NormalizedValues normalizedValues) {
         this.slidingWindowSize = slidingWindowSize;
