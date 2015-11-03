@@ -87,5 +87,9 @@ public class NeuralNetworkPredictor {
     public DataSet getLearningData() {
         return learningData;
     }
+
+    public void save(String filePath) {
+        this.neuralNetwork.save(filePath);
+    }
 }
 
