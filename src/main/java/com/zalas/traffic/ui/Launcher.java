@@ -1,5 +1,6 @@
 package com.zalas.traffic.ui;
 
+import com.zalas.traffic.prediction.NeuralNetworkPredictionTester;
 import com.zalas.traffic.prediction.network.NeuralNetworkPredictor;
 import com.zalas.traffic.prediction.network.NeuralNetworkPredictorFactory;
 
@@ -20,13 +21,9 @@ public class Launcher {
         File afternoonFile = new File(getClass().getResource("/broniewskiegoN/BroniewskiegoN-afternoon.csv").toURI());
         File eveningFile = new File(getClass().getResource("/broniewskiegoN/BroniewskiegoN-evening.csv").toURI());
 
-
-        NeuralNetworkPredictor predictorMorning = factory.create(morningFile, 100);
-        predictorMorning.train();
-
-
-
-
+        File morningFileTest = new File(getClass().getResource("/broniewskiegoN/test/BroniewskiegoN-morning.csv").toURI());
+        File afternoonFileTest = new File(getClass().getResource("/broniewskiegoN/test/BroniewskiegoN-afternoon.csv").toURI());
+        File eveningFileTest = new File(getClass().getResource("/broniewskiegoN/test/BroniewskiegoN-evening.csv").toURI());
 
 
 //        double prediction = predictorMorning.getPrediction(new double[]{
@@ -39,8 +36,8 @@ public class Launcher {
 //        System.out.println("Prediction:     " + prediction);
 
 
-        NeuralNetworkPredictor predictorAfternoon = factory.create(afternoonFile, 100);
-        predictorAfternoon.train();
+//        NeuralNetworkPredictor predictorAfternoon = factory.create(afternoonFile, 100);
+//        predictorAfternoon.train();
 
 //        prediction = predictorAfternoon.getPrediction(new double[]{
 //                149, 161, 135, 135, 163, 203, 141, 125, 156, 158, 122, 122, 174, 175, 154, 149, 145, 152, 133, 136, 191,
@@ -53,8 +50,9 @@ public class Launcher {
 //        System.out.println("Prediction:     " + prediction);
 
 
-        NeuralNetworkPredictor predictorEvening = factory.create(eveningFile, 100);
-        predictorEvening.train();
+//        NeuralNetworkPredictor predictorEvening = factory.create(eveningFile, 100);
+//        predictorEvening.train();
+
 //        prediction = predictorEvening.getPrediction(new double[]{
 //                104, 85, 63, 61, 124, 126, 122, 100, 112, 80, 69, 59, 123, 146, 121, 111, 113, 87, 71, 61, 123, 120,
 //                127, 119, 98, 78, 70, 54, 133, 142, 109, 104, 101, 78, 66, 58, 124, 145, 126, 104, 96, 79, 63, 55, 117,
@@ -64,6 +62,12 @@ public class Launcher {
 //        });
 //        System.out.println("Expected value: " + 119);
 //        System.out.println("Prediction:     " + prediction);
+
+
+        NeuralNetworkPredictor predictorMorning = factory.create(morningFile, 100);
+        predictorMorning.train();
+
+        NeuralNetworkPredictionTester neuralNetworkPredictionTester = new NeuralNetworkPredictionTester(morningFile, morningFileTest, predictorMorning);
 
 
     }
