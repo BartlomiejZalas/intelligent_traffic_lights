@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 public class NeuralNetworkPredictor {
 
-    private int slidingWindowSize;
+    private int noOfInputs;
     private DataSet learningData;
     private NormalizedValues normalizedValues;
     private NeuralNetwork<BackPropagation> neuralNetwork;
@@ -22,10 +22,10 @@ public class NeuralNetworkPredictor {
     private static final double LEARNING_RATE = 0.001;
     private static final double MAX_ERROR = 0.0035;
 
-    public NeuralNetworkPredictor(int slidingWindowSize, NormalizedValues normalizedValues) {
-        this.slidingWindowSize = slidingWindowSize;
+    public NeuralNetworkPredictor(int noOfInputs, NormalizedValues normalizedValues) {
+        this.noOfInputs = noOfInputs;
         this.normalizedValues = normalizedValues;
-        this.learningData = new DataSet(slidingWindowSize, 1);
+        this.learningData = new DataSet(noOfInputs, 1);
         this.neuralNetwork = createNeuralNetwork();
     }
 
@@ -45,21 +45,21 @@ public class NeuralNetworkPredictor {
 
     private void prepareData() throws IOException {
         ArrayList<Double> values = normalizedValues.normalizeValues();
-        for (int i = 0; i < values.size() - slidingWindowSize; i++) {
-            learningData.addRow(new DataSetRow(createTrainingArray(values, i), new double[]{values.get(i + slidingWindowSize)}));
+        for (int i = 0; i < values.size() - noOfInputs; i++) {
+            learningData.addRow(new DataSetRow(createTrainingArray(values, i), new double[]{values.get(i + noOfInputs)}));
         }
     }
 
     private double[] createTrainingArray(ArrayList<Double> normalizedValues, int i) {
-        double[] trainingArray = new double[slidingWindowSize];
-        for (int w = 0; w < slidingWindowSize; w++) {
+        double[] trainingArray = new double[noOfInputs];
+        for (int w = 0; w < noOfInputs; w++) {
             trainingArray[w] = normalizedValues.get(i + w);
         }
         return trainingArray;
     }
 
     private NeuralNetwork<BackPropagation> createNeuralNetwork() {
-        NeuralNetwork<BackPropagation> neuralNetwork = new MultiLayerPerceptron(slidingWindowSize, slidingWindowSize /4, 1);
+        NeuralNetwork<BackPropagation> neuralNetwork = new MultiLayerPerceptron(noOfInputs, noOfInputs /4, 1);
         SupervisedLearning learningRule = neuralNetwork.getLearningRule();
         learningRule.setMaxError(MAX_ERROR);
         learningRule.setLearningRate(LEARNING_RATE);
@@ -90,6 +90,10 @@ public class NeuralNetworkPredictor {
 
     public void save(String filePath) {
         this.neuralNetwork.save(filePath);
+    }
+
+    public int getNoOfInputs() {
+        return noOfInputs;
     }
 }
 
