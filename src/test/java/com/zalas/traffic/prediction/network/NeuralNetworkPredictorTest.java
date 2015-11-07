@@ -1,6 +1,7 @@
 package com.zalas.traffic.prediction.network;
 
 import com.zalas.traffic.prediction.normalization.NormalizedValues;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -8,10 +9,14 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.neuroph.core.NeuralNetwork;
 import org.neuroph.core.data.DataSet;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import static com.google.common.collect.Lists.*;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.verify;
@@ -26,6 +31,13 @@ public class NeuralNetworkPredictorTest {
 
     private static final int LEARNING_SET_SIZE = 3;
     private static final double OUTPUT_VALUE = 8.5;
+    private File test_file;
+
+    @Before
+    public void setUp() throws Exception {
+        test_file = File.createTempFile("predictor", "nnp");;
+        test_file.deleteOnExit();
+    }
 
     @Test
     public void train_shouldPrepareLearningDataAndTrainNetwork() throws Exception {
@@ -53,6 +65,29 @@ public class NeuralNetworkPredictorTest {
         verify(neuralNetwork).getOutput();
         assertEquals(OUTPUT_VALUE, result, 0.01);
 
+    }
+
+    @Test
+    public void save_shouldSerializeAndSaveFileWithPredictor() throws Exception {
+        NormalizedValues normalizer = new NormalizedValues(newArrayList(1.2,2.1));
+        NeuralNetworkPredictor neuralNetworkPredictor = new NeuralNetworkPredictor(LEARNING_SET_SIZE, normalizer);
+
+        neuralNetworkPredictor.save(test_file.getAbsolutePath());
+
+        assertTrue(test_file.exists());
+    }
+
+    @Test
+    public void load_shouldUnserializeAndLoadFileWithPredictor() throws Exception {
+        NormalizedValues normalizer = new NormalizedValues(newArrayList(1.2,2.1));
+        NeuralNetworkPredictor neuralNetworkPredictor = new NeuralNetworkPredictor(LEARNING_SET_SIZE, normalizer);
+        neuralNetworkPredictor.save(test_file.getAbsolutePath());
+
+        NeuralNetworkPredictor loadedPredictor = NeuralNetworkPredictor.load(test_file.getAbsolutePath());
+        assertEquals(LEARNING_SET_SIZE, loadedPredictor.getNoOfInputs());
+        assertEquals(normalizer, loadedPredictor.getNormalizedValues());
+        assertNotNull(loadedPredictor.getLearningData());
+        assertNotNull(loadedPredictor.getNeuralNetwork());
     }
 
     private ArrayList<Double> createNormalizedValues() {

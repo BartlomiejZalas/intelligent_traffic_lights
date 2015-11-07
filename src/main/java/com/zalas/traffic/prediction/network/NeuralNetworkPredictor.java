@@ -8,10 +8,10 @@ import org.neuroph.core.learning.SupervisedLearning;
 import org.neuroph.nnet.MultiLayerPerceptron;
 import org.neuroph.nnet.learning.BackPropagation;
 
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 
-public class NeuralNetworkPredictor {
+public class NeuralNetworkPredictor implements Serializable {
 
     private int noOfInputs;
     private DataSet learningData;
@@ -59,7 +59,7 @@ public class NeuralNetworkPredictor {
     }
 
     private NeuralNetwork<BackPropagation> createNeuralNetwork() {
-        NeuralNetwork<BackPropagation> neuralNetwork = new MultiLayerPerceptron(noOfInputs, noOfInputs /4, 1);
+        NeuralNetwork<BackPropagation> neuralNetwork = new MultiLayerPerceptron(noOfInputs, noOfInputs / 4, 1);
         SupervisedLearning learningRule = neuralNetwork.getLearningRule();
         learningRule.setMaxError(MAX_ERROR);
         learningRule.setLearningRate(LEARNING_RATE);
@@ -70,6 +70,32 @@ public class NeuralNetworkPredictor {
 
     private void trainNetwork() {
         neuralNetwork.learn(learningData);
+    }
+
+    public void save(String filePath) throws IOException {
+        ObjectOutputStream out = null;
+        try {
+            File file = new File(filePath);
+            out = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(file)));
+            out.writeObject(this);
+            out.flush();
+        } finally {
+            if (out != null) {
+                out.close();
+            }
+        }
+    }
+
+    public static NeuralNetworkPredictor load(String filePath) throws IOException, ClassNotFoundException {
+        ObjectInputStream in = null;
+        try {
+            in = new ObjectInputStream(new BufferedInputStream(new FileInputStream(filePath)));
+            return (NeuralNetworkPredictor) in.readObject();
+        } finally {
+            if (in != null) {
+                in.close();
+            }
+        }
     }
 
     public NeuralNetwork<BackPropagation> getNeuralNetwork() {
@@ -86,10 +112,6 @@ public class NeuralNetworkPredictor {
 
     public DataSet getLearningData() {
         return learningData;
-    }
-
-    public void save(String filePath) {
-        this.neuralNetwork.save(filePath);
     }
 
     public int getNoOfInputs() {
