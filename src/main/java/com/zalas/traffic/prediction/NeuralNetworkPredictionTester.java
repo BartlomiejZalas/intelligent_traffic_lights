@@ -30,7 +30,7 @@ public class NeuralNetworkPredictionTester {
         this.predictor = predictor;
     }
 
-    public void test() throws IOException {
+    public double checkAccuracyAndGenerateReport() throws IOException {
 
         double finalAccuracyAccumulator = 0;
 
@@ -51,6 +51,8 @@ public class NeuralNetworkPredictionTester {
 
         reportWriter.addSummary(finalAccuracy);
         reportWriter.save(REPORT_OUTPUT_DIR + createOutputFilename());
+
+        return finalAccuracy;
     }
 
     private double calculateFinalAccuracy(double finalAccuracyAcc, int numberOfElements) {
