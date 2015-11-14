@@ -10,15 +10,13 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Launcher {
+import static com.zalas.traffic.utils.Utils.*;
 
-    private static final String[] STREETS = new String[]{"broniewskiegoN", "broniewskiegoS", "glowna", "kusocinskiego"};
-    private static final String[] TIME_OF_DAY = new String[]{"morning", "afternoon", "evening"};
-    private static final String PREDICTORS_OUTPUT_DIRECTORY = "/home/bartek/AITraffic/networks/";
+public class Launcher {
 
     public static void main(String[] args) throws Exception {
         Launcher launcher = new Launcher();
-//        launcher.createPredictors();
+        launcher.createPredictors();
         launcher.testPredictors();
     }
 
@@ -37,14 +35,14 @@ public class Launcher {
             File testDataFile = new File(getClass().getResource("/test/" + dataFileName + ".csv").toURI());
             NeuralNetworkPredictor predictor = NeuralNetworkPredictor.load(PREDICTORS_OUTPUT_DIRECTORY + dataFileName + ".nnp");
             double accuracy = testPredictor(trainingDataFile, testDataFile, predictor);
-            System.out.println(dataFileName + " predictor test completed. Accuracy :" + accuracy+"%");
+            System.out.println(dataFileName + " predictor test completed. Accuracy :" + accuracy + "%");
         }
     }
 
     private List<String> getDataFileNames() {
         List<String> files = new ArrayList<>();
         for (String street : STREETS) {
-            for (String time : TIME_OF_DAY) {
+            for (String time : TIMES_OF_DAY) {
                 files.add(street + "-" + time);
             }
         }

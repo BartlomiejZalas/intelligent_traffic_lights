@@ -13,10 +13,10 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.zalas.traffic.utils.Utils.COLUMN_WITH_VALUES;
+import static com.zalas.traffic.utils.Utils.REPORT_OUTPUT_DIR;
+
 public class NeuralNetworkPredictionTester {
-
-
-    private static final String REPORT_OUTPUT_DIR = "/home/bartek/AITraffic/networks_accuracy/";
 
     private File historicalDataFile;
     private File testingDataFile;
@@ -60,12 +60,12 @@ public class NeuralNetworkPredictionTester {
     }
 
     private List<Double> getHistoricalData() throws IOException {
-        ArrayList<Double> historicalData = csvLineReader.getValuesFromColumn(historicalDataFile, 1);
+        ArrayList<Double> historicalData = csvLineReader.getValuesFromColumn(historicalDataFile, COLUMN_WITH_VALUES);
         return historicalData.subList(historicalData.size() - predictor.getNoOfInputs(), historicalData.size());
     }
 
     private ArrayList<Double> getTestingData() throws IOException {
-        return csvLineReader.getValuesFromColumn(testingDataFile, 1);
+        return csvLineReader.getValuesFromColumn(testingDataFile, COLUMN_WITH_VALUES);
     }
 
     private void updateHistoricalValues(List<Double> subHistoricalData, double expectedValue) {
