@@ -117,5 +117,17 @@ public class NeuralNetworkPredictor implements Serializable {
     public int getNoOfInputs() {
         return noOfInputs;
     }
+
+    public static int getMaxIterations() {
+        return MAX_ITERATIONS;
+    }
+
+    public static double getLearningRate() {
+        return LEARNING_RATE;
+    }
+
+    public static double getMaxError() {
+        return MAX_ERROR;
+    }
 }
 

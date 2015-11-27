@@ -16,7 +16,9 @@ public class Launcher {
 
     public static void main(String[] args) throws Exception {
         Launcher launcher = new Launcher();
+        System.out.println("Creating network");
         launcher.createPredictors();
+        System.out.println("Testing network");
         launcher.testPredictors();
     }
 
@@ -52,7 +54,9 @@ public class Launcher {
     private NeuralNetworkPredictor createPredictor(File dataFile) throws IOException, URISyntaxException {
         NeuralNetworkPredictorFactory factory = new NeuralNetworkPredictorFactory();
         NeuralNetworkPredictor predictor = factory.create(dataFile, 100);
+        long time = System.nanoTime();
         predictor.train();
+        System.out.println("Learning time: " + ((double)(System.nanoTime() - time) / 1000000000));
         return predictor;
     }
 
