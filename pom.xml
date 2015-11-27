@@ -6,7 +6,13 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.zalas.traffic</groupId>
     <artifactId>traffic</artifactId>
+    <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
+
+    <modules>
+        <module>prediction</module>
+        <module>dynamic</module>
+    </modules>
 
     <repositories>
         <repository>

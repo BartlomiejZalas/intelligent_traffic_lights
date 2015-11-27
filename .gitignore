@@ -1,3 +1,5 @@
 /target
 .idea
 *.iml
+/networks_accuracy
+/networks
