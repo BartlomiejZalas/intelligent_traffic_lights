@@ -11,12 +11,6 @@
     <name>AI Traffic - Prediction Module</name>
     <artifactId>prediction</artifactId>
 
-    <properties>
-        <networkDirectoryName>networks</networkDirectoryName>
-        <networkAccuracyDirectoryName>networks_accuracy</networkAccuracyDirectoryName>
-    </properties>
-
-
     <repositories>
         <repository>
             <id>neuroph.sourceforge.net</id>
@@ -58,6 +52,8 @@
             <artifactId>guava</artifactId>
             <version>r05</version>
         </dependency>
+
+
     </dependencies>
 
     <build>
@@ -77,10 +73,9 @@
                         <phase>generate-test-resources</phase>
                         <configuration>
                             <tasks>
-                                <echo message="Creating output directory"/>
-                                .
-                                <mkdir dir="./target/${networkDirectoryName}"/>
-                                <mkdir dir="./target/${networkAccuracyDirectoryName}"/>
+                                <echo message="Creating output directories"/>
+                                <mkdir dir="../target/${networkDirectoryName}"/>
+                                <mkdir dir="../target/${networkAccuracyDirectoryName}"/>
                             </tasks>
                         </configuration>
                         <goals>
@@ -92,7 +87,5 @@
         </plugins>
 
     </build>
-
-
 
 </project>
