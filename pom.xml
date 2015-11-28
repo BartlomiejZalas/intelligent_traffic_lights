@@ -8,52 +8,13 @@
     <artifactId>traffic</artifactId>
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
+    <name>AI Traffic</name>
 
     <modules>
         <module>prediction</module>
         <module>dynamic</module>
+        <module>io</module>
     </modules>
-
-    <repositories>
-        <repository>
-            <id>neuroph.sourceforge.net</id>
-            <url>http://neuroph.sourceforge.net/maven2/</url>
-        </repository>
-    </repositories>
-
-    <dependencies>
-        <dependency>
-            <groupId>org.neuroph</groupId>
-            <artifactId>neuroph-core</artifactId>
-            <version>2.8</version>
-        </dependency>
-
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.11</version>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-            <version>3.4</version>
-        </dependency>
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-all</artifactId>
-            <version>1.9.5</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>r05</version>
-        </dependency>
-
-
-    </dependencies>
 
     <build>
         <plugins>
