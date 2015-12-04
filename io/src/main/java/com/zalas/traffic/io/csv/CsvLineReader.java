@@ -6,52 +6,48 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import static java.util.Arrays.asList;
 
 public class CsvLineReader {
 
-    public ArrayList<Double> getValuesFromColumn(File csvFile, int column) throws IOException {
-
-        ArrayList<Double> values = new ArrayList<>();
-        BufferedReader reader = new BufferedReader(new FileReader(csvFile));
-
-        try {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                values.add(getValueFromColumn(line, column));
-            }
-        } finally {
-            reader.close();
-        }
-        return values;
+    public List<Double> getValuesFromColumn(File csvFile, int column) throws IOException {
+        return getLinesFromFile(csvFile).stream()
+                .map(line -> getValueFromColumn(line, column))
+                .collect(Collectors.toList());
     }
 
     public List<List<Double>> getRows(File csvFile) throws IOException {
-        List<List<Double>> rows = new ArrayList<>();
-        BufferedReader reader = new BufferedReader(new FileReader(csvFile));
+        return  getLinesFromFile(csvFile).stream()
+                .map(this::getDoublesFromLine)
+                .collect(Collectors.toList());
+    }
 
+    private List<String> getLinesFromFile(File csvFile) throws IOException {
+        BufferedReader reader = new BufferedReader(new FileReader(csvFile));
         try {
+            ArrayList<String> lines = new ArrayList<>();
             String line;
             while ((line = reader.readLine()) != null) {
-                rows.add(getDoublesFromLine(line));
+                lines.add(line);
             }
+            return lines;
         } finally {
             reader.close();
         }
-        return rows;
     }
 
     private List<Double> getDoublesFromLine(String line) {
         List<Double> numbers = new ArrayList<>();
-        String[] tokens = line.split(",");
-        for (String number : tokens) {
-            numbers.add(Double.valueOf(number));
-        }
+        numbers.addAll(asList(line.split(",")).stream()
+                .map(Double::valueOf)
+                .collect(Collectors.toList()));
         return numbers;
     }
 
     private Double getValueFromColumn(String line, int column) {
-        String[] tokens = line.split(",");
-        return Double.valueOf(tokens[column]);
+        return getDoublesFromLine(line).get(column);
     }
 
 
