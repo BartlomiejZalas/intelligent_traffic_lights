@@ -22,7 +22,7 @@ public class DataSetTest {
         List<DataRow> rows = creteListOfRows(new double[][]{INPUTS_1, INPUTS_2}, new double[]{OUTPUT_1, OUTPUT_2});
         dataSet = new DataSet(rows);
 
-        double[][] result = dataSet.getInputsAsArray();
+        double[][] result = dataSet.getInputsAsNormalizedArray();
 
         assertArrayEquals(new double[]{0, 0.5, 1} ,result[0], 0.1);
         assertArrayEquals(new double[]{0, 0.25, 0.5}, result[1], 0.1);
@@ -33,7 +33,7 @@ public class DataSetTest {
         List<DataRow> rows = creteListOfRows(new double[][]{INPUTS_1, INPUTS_2}, new double[]{OUTPUT_1, OUTPUT_2});
         dataSet = new DataSet(rows);
 
-        double[][] result = dataSet.getOutputAsArray();
+        double[][] result = dataSet.getOutputAsNormalizedArray();
 
         assertEquals(0, result[0][0], 0.1);
         assertEquals(1, result[1][0], 0.1);

@@ -1,18 +1,19 @@
 package com.zalas.traffic.dynamic.prediction;
 
 
+import com.zalas.traffic.dynamic.prediction.network.NeuralNetworkPredictor;
 import com.zalas.traffic.io.csv.CsvLineReader;
 import com.zalas.traffic.io.report.ReportWriter;
-import com.zalas.traffic.dynamic.prediction.network.NeuralNetworkPredictor;
-import com.zalas.traffic.dynamic.utils.Utils;
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
 import java.util.List;
+
+import static com.zalas.traffic.io.utils.Utils.COLUMN_WITH_VALUES;
+import static com.zalas.traffic.io.utils.Utils.getNetworksAccuracyOutputDirectory;
 
 public class NeuralNetworkPredictionTester {
 
@@ -48,7 +49,7 @@ public class NeuralNetworkPredictionTester {
         double finalAccuracy = calculateFinalAccuracy(finalAccuracyAccumulator, testingData.size());
 
         reportWriter.addSummary(finalAccuracy);
-        reportWriter.save(Utils.getNetworksAccuracyOutputDirectory() + createOutputFilename());
+        reportWriter.save(getNetworksAccuracyOutputDirectory() + createOutputFilename());
 
         return finalAccuracy;
     }
@@ -58,12 +59,12 @@ public class NeuralNetworkPredictionTester {
     }
 
     private List<Double> getHistoricalData() throws IOException {
-        ArrayList<Double> historicalData = csvLineReader.getValuesFromColumn(historicalDataFile, Utils.COLUMN_WITH_VALUES);
+        List<Double> historicalData = csvLineReader.getValuesFromColumn(historicalDataFile, COLUMN_WITH_VALUES);
         return historicalData.subList(historicalData.size() - predictor.getNoOfInputs(), historicalData.size());
     }
 
-    private ArrayList<Double> getTestingData() throws IOException {
-        return csvLineReader.getValuesFromColumn(testingDataFile, Utils.COLUMN_WITH_VALUES);
+    private List<Double> getTestingData() throws IOException {
+        return csvLineReader.getValuesFromColumn(testingDataFile, COLUMN_WITH_VALUES);
     }
 
     private void updateHistoricalValues(List<Double> subHistoricalData, double expectedValue) {

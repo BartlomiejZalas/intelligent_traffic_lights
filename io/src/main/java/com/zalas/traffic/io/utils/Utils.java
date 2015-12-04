@@ -1,7 +1,4 @@
-package com.zalas.traffic.dynamic.utils;
-
-
-import org.apache.commons.lang3.ArrayUtils;
+package com.zalas.traffic.io.utils;
 
 import java.io.File;
 import java.io.IOException;
@@ -9,6 +6,8 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+
+import static org.apache.commons.lang3.ArrayUtils.toPrimitive;
 
 public class Utils {
 
@@ -30,6 +29,12 @@ public class Utils {
         return p.getProperty("target") + File.separator + p.getProperty("network_accuracy_output_dirname") + File.separator;
     }
 
+    public static String getDynamicOutputDirectory() throws IOException {
+        Properties p = loadProperties();
+        return p.getProperty("target") + File.separator + p.getProperty("dynamic_output_dirname") + File.separator;
+    }
+
+
     private static Properties loadProperties() throws IOException {
         InputStream is = Utils.class.getResourceAsStream("/config.properties");
         Properties p = new Properties();
@@ -48,7 +53,7 @@ public class Utils {
     public static double[] convertListToArray(List<Double> subHistoricalData) {
         Double[] subHistoricalDataArr = new Double[subHistoricalData.size()];
         subHistoricalData.toArray(subHistoricalDataArr);
-        return ArrayUtils.toPrimitive(subHistoricalDataArr);
+        return toPrimitive(subHistoricalDataArr);
     }
 
 }

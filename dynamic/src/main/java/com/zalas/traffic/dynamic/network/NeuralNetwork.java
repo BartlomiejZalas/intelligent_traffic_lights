@@ -1,4 +1,4 @@
-package com.zalas.traffic.dynamic;
+package com.zalas.traffic.dynamic.network;
 
 import com.zalas.traffic.dynamic.data.DataSet;
 import org.encog.Encog;
@@ -35,7 +35,7 @@ public class NeuralNetwork {
     }
 
     public void train() {
-        MLDataSet trainingSet = new BasicMLDataSet(dataSet.getInputsAsArray(), dataSet.getOutputAsArray());
+        MLDataSet trainingSet = new BasicMLDataSet(dataSet.getInputsAsNormalizedArray(), dataSet.getOutputAsNormalizedArray());
         final ResilientPropagation train = new ResilientPropagation(network, trainingSet);
 
         int epoch = 1;

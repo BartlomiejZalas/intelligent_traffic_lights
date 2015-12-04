@@ -3,15 +3,16 @@ package com.zalas.traffic.dynamic.prediction.normalization;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 public class NormalizedValues implements Serializable {
 
     private double max;
     private double min;
 
-    private ArrayList<Double> deNormalizedValues;
+    private List<Double> deNormalizedValues;
 
-    public NormalizedValues(ArrayList<Double> deNormalizedValues) {
+    public NormalizedValues(List<Double> deNormalizedValues) {
         this.deNormalizedValues = deNormalizedValues;
         findMax(deNormalizedValues);
         findMin(deNormalizedValues);
@@ -33,11 +34,11 @@ public class NormalizedValues implements Serializable {
         return ((min*(0.9 - input)) + (max * (input-0.1)))/0.8;
     }
 
-    private void findMin(ArrayList<Double> deNormalizedValues) {
+    private void findMin(List<Double> deNormalizedValues) {
         min = Collections.min(deNormalizedValues);
     }
 
-    private void findMax(ArrayList<Double> deNormalizedValues) {
+    private void findMax(List<Double> deNormalizedValues) {
         max = Collections.max(deNormalizedValues);
     }
 

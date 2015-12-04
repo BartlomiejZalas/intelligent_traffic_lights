@@ -20,6 +20,7 @@
     <properties>
         <networkDirectoryName>networks</networkDirectoryName>
         <networkAccuracyDirectoryName>networks_accuracy</networkAccuracyDirectoryName>
+        <dynamicOutputName>dynamic_output</dynamicOutputName>
     </properties>
 
     <build>
@@ -53,6 +54,8 @@
                                         <exclude>${networkDirectoryName}/**</exclude>
                                         <exclude>${networkAccuracyDirectoryName}</exclude>
                                         <exclude>${networkAccuracyDirectoryName}/**</exclude>
+                                        <exclude>${dynamicOutputName}</exclude>
+                                        <exclude>${dynamicOutputName}/**</exclude>
                                     </excludes>
                                     <followSymlinks>false</followSymlinks>
                                 </fileset>

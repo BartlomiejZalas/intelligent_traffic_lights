@@ -3,7 +3,6 @@ package com.zalas.traffic.dynamic.ui;
 import com.zalas.traffic.dynamic.prediction.NeuralNetworkPredictionTester;
 import com.zalas.traffic.dynamic.prediction.network.NeuralNetworkPredictor;
 import com.zalas.traffic.dynamic.prediction.network.NeuralNetworkPredictorFactory;
-import com.zalas.traffic.dynamic.utils.Utils;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,7 +10,8 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.zalas.traffic.dynamic.utils.Utils.*;
+import static com.zalas.traffic.io.utils.Utils.*;
+
 
 public class Launcher {
 
@@ -28,8 +28,8 @@ public class Launcher {
             File trainingDataFile = new File(getClass().getResource("/data/" + dataFileName + ".csv").toURI());
             System.out.println(trainingDataFile);
             NeuralNetworkPredictor predictor = createPredictor(trainingDataFile);
-            predictor.save(Utils.getNetworksOutputDirectory() + dataFileName + ".nnp");
-            System.out.println(dataFileName + " predictor saved in " + Utils.getNetworksOutputDirectory());
+            predictor.save(getNetworksOutputDirectory() + dataFileName + ".nnp");
+            System.out.println(dataFileName + " predictor saved in " + getNetworksOutputDirectory());
         }
     }
 
@@ -37,7 +37,7 @@ public class Launcher {
         for (String dataFileName : getDataFileNames()) {
             File trainingDataFile = new File(getClass().getResource("/data/" + dataFileName + ".csv").toURI());
             File testDataFile = new File(getClass().getResource("/test/" + dataFileName + ".csv").toURI());
-            NeuralNetworkPredictor predictor = NeuralNetworkPredictor.load(Utils.getNetworksOutputDirectory() + dataFileName + ".nnp");
+            NeuralNetworkPredictor predictor = NeuralNetworkPredictor.load(getNetworksOutputDirectory() + dataFileName + ".nnp");
             double accuracy = testPredictor(trainingDataFile, testDataFile, predictor);
             System.out.println(dataFileName + " predictor test completed. Accuracy :" + accuracy + "%");
         }

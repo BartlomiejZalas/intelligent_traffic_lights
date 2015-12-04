@@ -2,7 +2,9 @@ package com.zalas.traffic.dynamic;
 
 import com.zalas.traffic.dynamic.data.DataSet;
 import com.zalas.traffic.dynamic.data.DataSetFromCsvCreator;
+import com.zalas.traffic.dynamic.network.NeuralNetwork;
 import com.zalas.traffic.io.csv.CsvLineReader;
+import com.zalas.traffic.io.report.HtmlReportWriter;
 
 import java.io.File;
 import java.util.Arrays;
@@ -26,9 +28,9 @@ public class Main {
         double result = neuralNetwork.getOutput(testInputs);
         neuralNetwork.close();
 
-        System.out.println("Output: "+ result + ", Expected: "+2);
+        System.out.println("Output: " + result + ", Expected: " + 2);
 
-        new ReportPrinter(dataSet, testInputs, result).createReport();
+        new HtmlReportWriter(dataSet.getInputsAsArray(), dataSet.getOutputAsArray(), testInputs, result).createReport();
 
         System.out.println("Report saved");
     }
