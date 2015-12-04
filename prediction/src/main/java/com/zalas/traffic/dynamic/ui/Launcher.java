@@ -26,6 +26,7 @@ public class Launcher {
     public void createPredictors() throws Exception {
         for (String dataFileName : getDataFileNames()) {
             File trainingDataFile = new File(getClass().getResource("/data/" + dataFileName + ".csv").toURI());
+            System.out.println(trainingDataFile);
             NeuralNetworkPredictor predictor = createPredictor(trainingDataFile);
             predictor.save(Utils.getNetworksOutputDirectory() + dataFileName + ".nnp");
             System.out.println(dataFileName + " predictor saved in " + Utils.getNetworksOutputDirectory());

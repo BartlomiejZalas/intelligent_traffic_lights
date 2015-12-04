@@ -35,8 +35,8 @@ public class DataSetTest {
 
         double[][] result = dataSet.getOutputAsArray();
 
-        assertEquals(result[0][0], 0, 0.1);
-        assertEquals(result[1][0], 1, 0.1);
+        assertEquals(0, result[0][0], 0.1);
+        assertEquals(1, result[1][0], 0.1);
     }
 
     @Test

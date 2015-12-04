@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class CsvLineReader {
 
@@ -22,6 +23,30 @@ public class CsvLineReader {
             reader.close();
         }
         return values;
+    }
+
+    public List<List<Double>> getRows(File csvFile) throws IOException {
+        List<List<Double>> rows = new ArrayList<>();
+        BufferedReader reader = new BufferedReader(new FileReader(csvFile));
+
+        try {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                rows.add(getDoublesFromLine(line));
+            }
+        } finally {
+            reader.close();
+        }
+        return rows;
+    }
+
+    private List<Double> getDoublesFromLine(String line) {
+        List<Double> numbers = new ArrayList<>();
+        String[] tokens = line.split(",");
+        for (String number : tokens) {
+            numbers.add(Double.valueOf(number));
+        }
+        return numbers;
     }
 
     private Double getValueFromColumn(String line, int column) {

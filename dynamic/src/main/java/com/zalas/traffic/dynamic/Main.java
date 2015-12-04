@@ -1,11 +1,24 @@
 package com.zalas.traffic.dynamic;
 
 import com.zalas.traffic.dynamic.data.DataSet;
+import com.zalas.traffic.dynamic.data.DataSetFromCsvCreator;
+import com.zalas.traffic.io.csv.CsvLineReader;
+
+import java.io.File;
+import java.util.Arrays;
 
 public class Main {
 
     public static void main(String[] args) throws Exception {
-        DataSet dataSet = new DataSet();
+        new Main().run();
+    }
+
+    private void run() throws Exception {
+        File csvDataFile = new File(getClass().getResource("/dynamicDataSet.csv").toURI());
+        DataSet dataSet = new DataSetFromCsvCreator(new CsvLineReader()).prepareDataSet(csvDataFile);
+        dataSet.getDataRows().stream()
+                .forEach(row -> System.out.println(Arrays.toString(row.getInputs()) + ":" + row.getOutput()));
+
         NeuralNetwork neuralNetwork = new NeuralNetwork(dataSet);
         neuralNetwork.create();
         neuralNetwork.train();

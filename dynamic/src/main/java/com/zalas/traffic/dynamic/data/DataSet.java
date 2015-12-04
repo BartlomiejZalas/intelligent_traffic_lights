@@ -6,7 +6,7 @@ import java.util.List;
 public class DataSet {
 
     private static final int INPUTS_COUNT = 4;
-    private static final int OUTPUTS_COUNT = 45;
+    private static final int OUTPUTS_COUNT = 15;
 
 
     private List<DataRow> dataRows = new ArrayList<DataRow>();
