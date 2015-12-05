@@ -1,7 +1,11 @@
 package com.zalas.traffic.dynamic.data;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import static com.google.inject.internal.util.$Lists.newArrayList;
 
 public class DataSet {
 
@@ -30,20 +34,24 @@ public class DataSet {
         return result;
     }
 
-    public double[][] getInputsAsArray() {
-        double[][] result = new double[dataRows.size()][];
+    public List<List<Double>> getInputsAsList() {
+        List<List<Double>> inputs = newArrayList();
         for (int i = 0; i < dataRows.size(); i++) {
-            result[i] = dataRows.get(i).getInputs();
+            inputs.add(
+                    Arrays.stream(dataRows.get(i).getInputs())
+                    .boxed()
+                    .collect(Collectors.toList())
+            );
         }
-        return result;
+        return inputs;
     }
 
-    public double[][] getOutputAsArray() {
-        double[][] result = new double[dataRows.size()][];
+    public List<Double> getOutputAsList() {
+        List<Double> outputs = newArrayList();
         for (int i = 0; i < dataRows.size(); i++) {
-            result[i] = new double[]{dataRows.get(i).getOutput()};
+            outputs.add(dataRows.get(i).getOutput());
         }
-        return result;
+        return outputs;
     }
 
     private double[] normalizeArray(double[] inputs) {

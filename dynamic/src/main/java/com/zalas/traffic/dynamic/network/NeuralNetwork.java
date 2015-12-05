@@ -45,7 +45,7 @@ public class NeuralNetwork {
             System.out.println("Epoch #" + epoch + " Error:" + train.getError());
             epoch++;
             if (epoch > ITERATION_LIMIT) break;
-        } while (train.getError() > 0.03);
+        } while (train.getError() > 0.001);
         train.finishTraining();
     }
 

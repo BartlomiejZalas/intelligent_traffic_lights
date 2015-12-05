@@ -1,52 +1,68 @@
 package com.zalas.traffic.io.report;
 
 
-import com.zalas.traffic.io.utils.Utils;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
+
+import static com.google.inject.internal.util.$Lists.newArrayList;
 
 public class HtmlReportWriter {
 
-    private final double[][] inputs;
-    private final double[][] outputs;
-    private final double[] testInputs;
-    private final double result;
+    private final DynamicTrafficReportData learningReportData;
+    private final DynamicTrafficReportData testReportData;
 
-    public HtmlReportWriter(double[][] inputs, double[][] outputs, double[] testInputs, double result) {
-        this.inputs = inputs;
-        this.outputs = outputs;
-        this.testInputs = testInputs;
-        this.result = result;
+    private final HtmlTableGenerator tableGenerator = new HtmlTableGenerator();
+    private final HtmlElementsGenerator htmlElementsGenerator = new HtmlElementsGenerator();
+
+    public HtmlReportWriter(DynamicTrafficReportData learningReportData, DynamicTrafficReportData testReportData) {
+
+        this.learningReportData = learningReportData;
+        this.testReportData = testReportData;
     }
 
-    public void createReport() throws IOException, URISyntaxException {
+    public void createReport(File outputFile) throws IOException, URISyntaxException {
+
         String body = "";
-        body += "<table>";
-        body += "<tr><td align=center>Traffic</td><td align=center>Excepted Lights Configuration</td></tr>";
-        for (int i = 0; i < inputs.length; i++) {
-            body += "<tr><td><canvas id=\"intersection" + i + "\"></canvas></td><td>";
-            body += "<img src='traffic_cycles/" + (int) (outputs[i][0]) + ".png' />";
-            body += "<script>drawIntersection(document.getElementById(\"intersection" + i + "\"), " + Arrays.toString(inputs[i]) + ");</script>";
-            body += "</tr>";
+        body += createLearningHeader();
+        body += createLearningTable(learningReportData, "intersection");
+
+        body += createTestHeader();
+        body += createLearningTable(testReportData, "test");
+
+        writeToFile(outputFile, body);
+    }
+
+    private String createTestHeader() throws IOException {
+        return htmlElementsGenerator.generateH1("Test");
+    }
+
+    private String createLearningHeader() throws IOException {
+        return htmlElementsGenerator.generateH1("Learning Data");
+    }
+
+    private String createLearningTable(DynamicTrafficReportData learningReportData, String prefix) throws IOException {
+        List<List<String>> learningTableContent = newArrayList();
+        for (int i = 0; i < learningReportData.getTrafficStatuses().size(); i++) {
+            String htmlCanvas = htmlElementsGenerator.generateCanvas(prefix + i);
+            String htmlImg = htmlElementsGenerator.generateImage("traffic_cycles/" + learningReportData.getLightCycles().get(i) + ".png");
+            String htmlScript = htmlElementsGenerator.generateScriptDrawIntersection(prefix + i, learningReportData.getTrafficStatuses().get(i));
+            learningTableContent.add(newArrayList(htmlCanvas, htmlImg + htmlScript));
         }
-        body += "</table>";
+        ArrayList<String> learningTableHeaders = newArrayList("Traffic", "Expected Lights Configuration");
+        return tableGenerator.generateTable(learningTableContent, learningTableHeaders);
+    }
 
-        body += "<h1>Test</h1>";
-        body += "<canvas id=\"test\"></canvas>";
-        body += "<img src='traffic_cycles/" + (int) (result * 15) + ".png' />";
-        body += "<script>drawIntersection(document.getElementById(\"test\"), " + Arrays.toString(testInputs) + ");</script>";
-
-
+    private void writeToFile(File outputFile, String body) throws URISyntaxException, IOException {
         File htmlTemplateFile = new File(getClass().getResource("/report-template.html").toURI());
         String htmlString = FileUtils.readFileToString(htmlTemplateFile);
         String title = "Report";
         htmlString = htmlString.replace("$title", title);
         htmlString = htmlString.replace("$body", body);
-        File newHtmlFile = new File(Utils.getDynamicOutputDirectory() + "dynamic-report.html");
-        FileUtils.writeStringToFile(newHtmlFile, htmlString);
+        FileUtils.writeStringToFile(outputFile, htmlString);
     }
 }
