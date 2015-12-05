@@ -19,7 +19,7 @@ public class CsvLineReader {
     }
 
     public List<List<Double>> getRows(File csvFile) throws IOException {
-        return  getLinesFromFile(csvFile).stream()
+        return getLinesFromFile(csvFile).stream()
                 .map(this::getDoublesFromLine)
                 .collect(Collectors.toList());
     }
@@ -41,9 +41,17 @@ public class CsvLineReader {
     private List<Double> getDoublesFromLine(String line) {
         List<Double> numbers = new ArrayList<>();
         numbers.addAll(asList(line.split(",")).stream()
-                .map(Double::valueOf)
+                .map(this::getDoubleOrZero)
                 .collect(Collectors.toList()));
         return numbers;
+    }
+
+    private Double getDoubleOrZero(String string) {
+        try {
+            return Double.valueOf(string);
+        } catch (NumberFormatException e) {
+            return 0.0;
+        }
     }
 
     private Double getValueFromColumn(String line, int column) {

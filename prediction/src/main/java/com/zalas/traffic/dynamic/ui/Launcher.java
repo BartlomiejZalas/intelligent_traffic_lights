@@ -17,8 +17,8 @@ public class Launcher {
 
     public static void main(String[] args) throws Exception {
         Launcher launcher = new Launcher();
-        System.out.println("Creating network");
-        launcher.createPredictors();
+        //System.out.println("Creating network");
+        //launcher.createPredictors();
         System.out.println("Testing network");
         launcher.testPredictors();
     }
@@ -26,7 +26,6 @@ public class Launcher {
     public void createPredictors() throws Exception {
         for (String dataFileName : getDataFileNames()) {
             File trainingDataFile = new File(getClass().getResource("/data/" + dataFileName + ".csv").toURI());
-            System.out.println(trainingDataFile);
             NeuralNetworkPredictor predictor = createPredictor(trainingDataFile);
             predictor.save(getNetworksOutputDirectory() + dataFileName + ".nnp");
             System.out.println(dataFileName + " predictor saved in " + getNetworksOutputDirectory());
