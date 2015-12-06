@@ -15,23 +15,28 @@ public class DynamicTrafficTester {
     private final DynamicTrafficController controller;
 
     public DynamicTrafficTester(DataSet dataSet, DynamicTrafficController controller) {
-
         this.dataSet = dataSet;
         this.controller = controller;
     }
 
-    public List<Boolean> test() {
-        List<Boolean> results = newArrayList();
+    public List<TestResult> test() {
+        List<TestResult> results = newArrayList();
+
         for (DataRow row : dataSet.getDataRows()) {
+
             List<Integer> trafficStatus = convertToIntList(row.getInputs());
-            results.add(evaluate(row.getOutput(), controller.getLightCycle(trafficStatus)));
+            int expectedValue = (int) row.getOutput();
+            int computedValue = controller.getLightCycle(trafficStatus);
+            boolean wasCorrect = evaluate(expectedValue, computedValue);
+
+            results.add(new TestResult(wasCorrect, expectedValue, computedValue));
         }
         return results;
     }
 
-    private boolean evaluate(double output, int lightCycle) {
-        System.out.println(lightCycle + "==" + output);
-        return lightCycle == output;
+    private boolean evaluate(double expectedLightCycle, int lightCycle) {
+        System.out.println(lightCycle + "==" + expectedLightCycle + " is " +(lightCycle == expectedLightCycle));
+        return lightCycle == expectedLightCycle;
     }
 
     private List<Integer> convertToIntList(double[] inputs) {
