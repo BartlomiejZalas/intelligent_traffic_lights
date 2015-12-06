@@ -13,13 +13,13 @@ import static com.google.inject.internal.util.$Lists.newArrayList;
 
 public class HtmlReportWriter {
 
-    private final DynamicTrafficReportData learningReportData;
-    private final DynamicTrafficReportData testReportData;
+    private final ReportData learningReportData;
+    private final ReportData testReportData;
 
     private final HtmlTableGenerator tableGenerator = new HtmlTableGenerator();
     private final HtmlElementsGenerator htmlElementsGenerator = new HtmlElementsGenerator();
 
-    public HtmlReportWriter(DynamicTrafficReportData learningReportData, DynamicTrafficReportData testReportData) {
+    public HtmlReportWriter(ReportData learningReportData, ReportData testReportData) {
 
         this.learningReportData = learningReportData;
         this.testReportData = testReportData;
@@ -45,13 +45,14 @@ public class HtmlReportWriter {
         return htmlElementsGenerator.generateH1("Learning Data");
     }
 
-    private String createLearningTable(DynamicTrafficReportData learningReportData, String prefix) throws IOException {
+    private String createLearningTable(ReportData learningReportData, String prefix) throws IOException {
         List<List<String>> learningTableContent = newArrayList();
         for (int i = 0; i < learningReportData.getTrafficStatuses().size(); i++) {
             String htmlCanvas = htmlElementsGenerator.generateCanvas(prefix + i);
             String htmlImg = htmlElementsGenerator.generateImage("traffic_cycles/" + learningReportData.getLightCycles().get(i) + ".png");
             String htmlScript = htmlElementsGenerator.generateScriptDrawIntersection(prefix + i, learningReportData.getTrafficStatuses().get(i));
-            learningTableContent.add(newArrayList(htmlCanvas, htmlImg + htmlScript));
+            String summaryColumn = learningReportData.summaryColumn(i);
+            learningTableContent.add(newArrayList(htmlCanvas, htmlImg + htmlScript, summaryColumn));
         }
         ArrayList<String> learningTableHeaders = newArrayList("Traffic", "Expected Lights Configuration");
         return tableGenerator.generateTable(learningTableContent, learningTableHeaders);

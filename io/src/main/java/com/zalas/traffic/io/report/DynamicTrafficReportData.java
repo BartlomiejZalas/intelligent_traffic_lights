@@ -5,7 +5,7 @@ import java.util.List;
 import static com.google.inject.internal.util.$Lists.newArrayList;
 import static java.util.stream.Collectors.toList;
 
-public class DynamicTrafficReportData {
+public class DynamicTrafficReportData implements ReportData {
 
     private List<List<Integer>> trafficStatuses = newArrayList();
     private List<Integer> lightCycles = newArrayList();
@@ -24,11 +24,18 @@ public class DynamicTrafficReportData {
                 .collect(toList());
     }
 
+    @Override
     public List<List<Integer>> getTrafficStatuses() {
         return trafficStatuses;
     }
 
+    @Override
     public List<Integer> getLightCycles() {
         return lightCycles;
+    }
+
+    @Override
+    public String summaryColumn(int row) {
+        return "";
     }
 }

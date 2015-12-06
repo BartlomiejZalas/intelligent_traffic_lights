@@ -40,4 +40,14 @@ public class DynamicTrafficReportDataTest {
 
         assertEquals(newArrayList(4, 8, 2), lightCyclesResult);
     }
+
+    @Test
+    public void summaryColumn_shouldAlwaysReturnEmptyString() throws Exception {
+        DynamicTrafficReportData dynamicTrafficReportData = new DynamicTrafficReportData(newArrayList(), newArrayList());
+
+        assertEquals("", dynamicTrafficReportData.summaryColumn(0));
+        assertEquals("", dynamicTrafficReportData.summaryColumn(1));
+        assertEquals("", dynamicTrafficReportData.summaryColumn(2));
+        assertEquals("", dynamicTrafficReportData.summaryColumn(999));
+    }
 }

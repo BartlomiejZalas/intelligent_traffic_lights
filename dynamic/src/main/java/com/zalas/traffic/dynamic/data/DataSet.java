@@ -1,5 +1,7 @@
 package com.zalas.traffic.dynamic.data;
 
+import com.zalas.traffic.dynamic.normalization.TrafficLevelsNormalizator;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -9,8 +11,7 @@ import static com.google.inject.internal.util.$Lists.newArrayList;
 
 public class DataSet {
 
-    private static final int INPUTS_COUNT = 4;
-    private static final int OUTPUTS_COUNT = 15;
+    private static TrafficLevelsNormalizator normalizator = new TrafficLevelsNormalizator();
 
     private List<DataRow> dataRows = new ArrayList<>();
 
@@ -21,7 +22,7 @@ public class DataSet {
     public double[][] getInputsAsNormalizedArray() {
         double[][] result = new double[dataRows.size()][];
         for (int i = 0; i < dataRows.size(); i++) {
-            result[i] = normalizeArray(dataRows.get(i).getInputs());
+            result[i] = normalizeInputArray(dataRows.get(i).getInputs());
         }
         return result;
     }
@@ -39,8 +40,8 @@ public class DataSet {
         for (int i = 0; i < dataRows.size(); i++) {
             inputs.add(
                     Arrays.stream(dataRows.get(i).getInputs())
-                    .boxed()
-                    .collect(Collectors.toList())
+                            .boxed()
+                            .collect(Collectors.toList())
             );
         }
         return inputs;
@@ -54,20 +55,20 @@ public class DataSet {
         return outputs;
     }
 
-    private double[] normalizeArray(double[] inputs) {
+    private double[] normalizeInputArray(double[] inputs) {
         double[] result = new double[inputs.length];
         for (int i = 0; i < inputs.length; i++) {
-            result[i] = normalizeValue(inputs[i]);
+            result[i] = normalizeInput(inputs[i]);
         }
         return result;
     }
 
-    private double normalizeValue(double input) {
-        return input / INPUTS_COUNT;
+    private double normalizeInput(double input) {
+        return normalizator.normalizeTrafficStatus((int) input);
     }
 
     private double normalizeOutput(double output) {
-        return output / OUTPUTS_COUNT;
+        return normalizator.normalizeLightCycle((int) output);
     }
 
     public List<DataRow> getDataRows() {
