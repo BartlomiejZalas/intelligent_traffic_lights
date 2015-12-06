@@ -21,6 +21,8 @@ import static com.zalas.traffic.io.utils.Utils.getDynamicOutputDirectory;
 
 public class Main {
 
+    private static final String REPORT_NAME = "dynamic-report.html";
+
     public static void main(String[] args) throws Exception {
         new Main().run();
     }
@@ -29,7 +31,6 @@ public class Main {
         DataSet dataSet = prepareDataSet();
 
         NeuralNetwork neuralNetwork = prepareNetwork(dataSet);
-
         List<TestResult> results = testSolution(dataSet, neuralNetwork);
 
         createReport(dataSet, results);
@@ -59,19 +60,26 @@ public class Main {
     private void createReport(DataSet dataSet, List<TestResult> results) throws IOException, URISyntaxException {
         System.out.println("Create report");
 
-        DynamicTrafficReportData learningReportData = new DynamicTrafficReportData(dataSet.getInputsAsList(), dataSet.getOutputAsList());
-
-        List<Double> controllerOutputs = results.stream().map(result -> (double) result.getComputedLightCycle()).collect(Collectors.toList());
-        List<Boolean> controllerCorrectness = results.stream().map(result -> result.getWasCorrect()).collect(Collectors.toList());
-
-        DynamicTrafficTestReportData testReportData = new DynamicTrafficTestReportData(
-                new DynamicTrafficReportData(dataSet.getInputsAsList(), controllerOutputs), controllerCorrectness
-        );
+        DynamicTrafficReportData learningReportData = createLearningReportData(dataSet);
+        DynamicTrafficTestReportData testReportData = createTestReportData(dataSet, results);
 
         HtmlReportWriter htmlReportWriter = new HtmlReportWriter(learningReportData, testReportData);
-        File outputFile = new File(getDynamicOutputDirectory() + "dynamic-report.html");
+        File outputFile = new File(getDynamicOutputDirectory() + REPORT_NAME);
         htmlReportWriter.createReport(outputFile);
 
         System.out.println("Report saved in " + outputFile);
+    }
+
+    private DynamicTrafficReportData createLearningReportData(DataSet dataSet) {
+        return new DynamicTrafficReportData(dataSet.getInputsAsList(), dataSet.getOutputAsList());
+    }
+
+    private DynamicTrafficTestReportData createTestReportData(DataSet dataSet, List<TestResult> results) {
+        List<Double> controllerOutputs = results.stream().map(result -> (double) result.getComputedLightCycle()).collect(Collectors.toList());
+        List<Boolean> controllerCorrectness = results.stream().map(TestResult::getWasCorrect).collect(Collectors.toList());
+
+        return new DynamicTrafficTestReportData(
+                new DynamicTrafficReportData(dataSet.getInputsAsList(), controllerOutputs), controllerCorrectness
+        );
     }
 }
