@@ -6,6 +6,7 @@ import com.zalas.traffic.dynamic.data.DataSetFromCsvCreator;
 import com.zalas.traffic.dynamic.evaluation.DynamicTrafficTester;
 import com.zalas.traffic.dynamic.evaluation.TestResult;
 import com.zalas.traffic.dynamic.network.NeuralNetwork;
+import com.zalas.traffic.dynamic.network.NeurophNeuralNetwork;
 import com.zalas.traffic.io.csv.CsvLineReader;
 import com.zalas.traffic.io.report.DynamicTrafficReportData;
 import com.zalas.traffic.io.report.DynamicTrafficTestReportData;
@@ -28,40 +29,45 @@ public class Main {
     }
 
     private void run() throws Exception {
-        DataSet dataSet = prepareDataSet();
+        DataSet learningDS = prepareDataSet("/traffic-all.csv");
+        DataSet testDS = prepareDataSet("/traffic-all.csv");
 
-        NeuralNetwork neuralNetwork = prepareNetwork(dataSet);
-        List<TestResult> results = testSolution(dataSet, neuralNetwork);
+        NeuralNetwork neuralNetwork = prepareNetwork(learningDS);
+        List<TestResult> results = testSolution(testDS, neuralNetwork);
+        createReport(learningDS,testDS, results);
 
-        createReport(dataSet, results);
+        int sum =results.size();
+        List<TestResult> collect = results.stream().filter(r -> r.getWasCorrect()).collect(Collectors.toList());
+        System.out.println("Correctness:" + (double) collect.size() / (double) sum);
     }
 
-    private DataSet prepareDataSet() throws URISyntaxException, IOException {
+    private DataSet prepareDataSet(String fileName) throws URISyntaxException, IOException {
         System.out.println("Preparing data set");
-        File csvDataFile = new File(getClass().getResource("/dynamicDataSet.csv").toURI());
+        File csvDataFile = new File(getClass().getResource(fileName).toURI());
         return new DataSetFromCsvCreator(new CsvLineReader()).prepareDataSet(csvDataFile);
     }
 
     private NeuralNetwork prepareNetwork(DataSet dataSet) {
         System.out.println("Preparing network");
-        NeuralNetwork neuralNetwork = new NeuralNetwork(dataSet);
+        NeurophNeuralNetwork neuralNetwork = new NeurophNeuralNetwork(dataSet);
         neuralNetwork.create();
         neuralNetwork.train();
+        neuralNetwork.close();
         return neuralNetwork;
     }
 
-    private List<TestResult> testSolution(DataSet dataSet, NeuralNetwork neuralNetwork) {
+    private List<TestResult> testSolution(DataSet dataSet, NeuralNetwork encogNeuralNetwork) {
         System.out.println("Test solution");
-        DynamicTrafficController controller = new DynamicTrafficController(neuralNetwork);
+        DynamicTrafficController controller = new DynamicTrafficController(encogNeuralNetwork);
         DynamicTrafficTester tester = new DynamicTrafficTester(dataSet, controller);
         return tester.test();
     }
 
-    private void createReport(DataSet dataSet, List<TestResult> results) throws IOException, URISyntaxException {
+    private void createReport(DataSet dataSet, DataSet testDataSet, List<TestResult> results) throws IOException, URISyntaxException {
         System.out.println("Create report");
 
         DynamicTrafficReportData learningReportData = createLearningReportData(dataSet);
-        DynamicTrafficTestReportData testReportData = createTestReportData(dataSet, results);
+        DynamicTrafficTestReportData testReportData = createTestReportData(testDataSet, results);
 
         HtmlReportWriter htmlReportWriter = new HtmlReportWriter(learningReportData, testReportData);
         File outputFile = new File(getDynamicOutputDirectory() + REPORT_NAME);
