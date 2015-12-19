@@ -3,8 +3,6 @@ package com.zalas.traffic.simulator;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class SimulatorWindow extends JFrame {
 
@@ -20,12 +18,7 @@ public class SimulatorWindow extends JFrame {
         frame.pack();
         frame.setVisible(true);
 
-        nextIterationButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                drawPane.repaint();
-            }
-        });
+        nextIterationButton.addActionListener(e -> drawPane.repaint());
 
     }
 }

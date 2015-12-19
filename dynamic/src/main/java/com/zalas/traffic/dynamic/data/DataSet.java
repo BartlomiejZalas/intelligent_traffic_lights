@@ -2,6 +2,7 @@ package com.zalas.traffic.dynamic.data;
 
 import com.zalas.traffic.dynamic.normalization.TrafficLevelsNormalizator;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -9,7 +10,7 @@ import java.util.stream.Collectors;
 
 import static com.google.inject.internal.util.$Lists.newArrayList;
 
-public class DataSet {
+public class DataSet implements Serializable {
 
     private static TrafficLevelsNormalizator normalizator = new TrafficLevelsNormalizator();
 

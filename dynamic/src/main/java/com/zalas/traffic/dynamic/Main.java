@@ -47,12 +47,13 @@ public class Main {
         return new DataSetFromCsvCreator(new CsvLineReader()).prepareDataSet(csvDataFile);
     }
 
-    private NeuralNetwork prepareNetwork(DataSet dataSet) {
+    private NeuralNetwork prepareNetwork(DataSet dataSet) throws IOException {
         System.out.println("Preparing network");
         NeurophNeuralNetwork neuralNetwork = new NeurophNeuralNetwork(dataSet);
         neuralNetwork.create();
         neuralNetwork.train();
         neuralNetwork.close();
+        neuralNetwork.save("dynamicNN.nnet");
         return neuralNetwork;
     }
 

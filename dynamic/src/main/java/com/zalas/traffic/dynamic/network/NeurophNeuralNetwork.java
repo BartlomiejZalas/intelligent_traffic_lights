@@ -6,7 +6,9 @@ import org.neuroph.core.learning.SupervisedLearning;
 import org.neuroph.nnet.MultiLayerPerceptron;
 import org.neuroph.nnet.learning.BackPropagation;
 
-public class NeurophNeuralNetwork implements NeuralNetwork {
+import java.io.*;
+
+public class NeurophNeuralNetwork implements NeuralNetwork, Serializable {
 
     private DataSet dataSet;
     private org.neuroph.core.NeuralNetwork<BackPropagation> neuralNetwork;
@@ -46,6 +48,20 @@ public class NeurophNeuralNetwork implements NeuralNetwork {
     public void close() {
     }
 
+    @Override
+    public void save(String filePath) throws IOException {
+        ObjectOutputStream out = null;
+        try {
+            File file = new File(filePath);
+            out = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(file)));
+            out.writeObject(this);
+            out.flush();
+        } finally {
+            if (out != null) {
+                out.close();
+            }
+        }
+    }
 
     private org.neuroph.core.data.DataSet convertDataSet() {
         org.neuroph.core.data.DataSet neuroptDataSet = new org.neuroph.core.data.DataSet(4, 1);

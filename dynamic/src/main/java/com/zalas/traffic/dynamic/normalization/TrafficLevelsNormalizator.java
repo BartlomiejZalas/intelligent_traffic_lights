@@ -1,6 +1,8 @@
 package com.zalas.traffic.dynamic.normalization;
 
-public class TrafficLevelsNormalizator {
+import java.io.Serializable;
+
+public class TrafficLevelsNormalizator implements Serializable {
 
     private static final int TRAFFIC_LEVELS_COUNT = 4;
     private static final int LIGHT_CYCLES_COUNT = 15;

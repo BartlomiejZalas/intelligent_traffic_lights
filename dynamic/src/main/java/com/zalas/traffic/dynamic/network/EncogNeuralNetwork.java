@@ -13,6 +13,8 @@ import org.encog.neural.networks.BasicNetwork;
 import org.encog.neural.networks.layers.BasicLayer;
 import org.encog.neural.networks.training.propagation.resilient.ResilientPropagation;
 
+import java.io.IOException;
+
 public class EncogNeuralNetwork implements NeuralNetwork {
 
     private static final int ITERATION_LIMIT = 1000;
@@ -20,10 +22,10 @@ public class EncogNeuralNetwork implements NeuralNetwork {
     private BasicNetwork network;
 
     public EncogNeuralNetwork(DataSet dataSet) {
-
         this.dataSet = dataSet;
     }
 
+    @Override
     public void create() {
         network = new BasicNetwork();
         network.addLayer(new BasicLayer(null, false, 4));
@@ -34,6 +36,7 @@ public class EncogNeuralNetwork implements NeuralNetwork {
         network.reset();
     }
 
+    @Override
     public void train() {
         MLDataSet trainingSet = new BasicMLDataSet(dataSet.getInputsAsNormalizedArray(), dataSet.getOutputAsNormalizedArray());
         final ResilientPropagation train = new ResilientPropagation(network, trainingSet);
@@ -49,13 +52,21 @@ public class EncogNeuralNetwork implements NeuralNetwork {
         train.finishTraining();
     }
 
+    @Override
     public double getOutput(double[] inputs) {
         MLDataPair pair = new BasicMLDataPair(new BasicMLData(inputs));
         final MLData output = network.compute(pair.getInput());
         return output.getData(0);
     }
 
+    @Override
     public void close() {
         Encog.getInstance().shutdown();
     }
+
+    @Override
+    public void save(String file)throws IOException {
+        throw new NoSuchMethodError("Not implemented yet ;)");
+    }
+
 }

@@ -1,6 +1,8 @@
 package com.zalas.traffic.dynamic.data;
 
-public class DataRow {
+import java.io.Serializable;
+
+public class DataRow implements Serializable {
 
     private double[] inputs = new double[4];
     private double output;
