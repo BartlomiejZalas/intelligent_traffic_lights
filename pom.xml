@@ -15,6 +15,7 @@
         <module>dynamic</module>
         <module>io</module>
         <module>output</module>
+        <module>simulator</module>
     </modules>
 
     <properties>
