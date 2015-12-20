@@ -8,8 +8,9 @@ public class SimLauncher {
     public static void main(String[] args) throws Exception {
 
         DynamicTrafficController controller = new DynamicTrafficController(NeuralNetwork.load("dynamicNN.nnet"));
-        TrafficData trafficData = new TrafficData();
-
+        TrafficSchedule trafficSchedule = new TrafficSchedule();
+        TrafficModel trafficModel = new TrafficModel();
+        Simulator simulator = new Simulator(controller, trafficSchedule, trafficModel);
 
         new SimulatorWindow().lunch();
     }

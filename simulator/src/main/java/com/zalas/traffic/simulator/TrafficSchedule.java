@@ -6,7 +6,7 @@ import java.util.Map;
 
 import static com.google.common.collect.Lists.newArrayList;
 
-public class TrafficData {
+public class TrafficSchedule {
 
     Map<Integer, List<TrafficEvent>> eventsInIterations = new HashMap();
 
