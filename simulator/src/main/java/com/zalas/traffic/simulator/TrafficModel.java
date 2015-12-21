@@ -45,7 +45,23 @@ public class TrafficModel {
         this.trafficWest--;
     }
 
+    public int getIteration() {
+        return iteration;
+    }
 
+    public int getTrafficNorth() {
+        return trafficNorth;
+    }
 
+    public int getTrafficEast() {
+        return trafficEast;
+    }
 
+    public int getTrafficSouth() {
+        return trafficSouth;
+    }
+
+    public int getTrafficWest() {
+        return trafficWest;
+    }
 }

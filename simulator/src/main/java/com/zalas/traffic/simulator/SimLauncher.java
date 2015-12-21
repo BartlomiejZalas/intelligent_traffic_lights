@@ -12,7 +12,7 @@ public class SimLauncher {
         TrafficModel trafficModel = new TrafficModel();
         Simulator simulator = new Simulator(controller, trafficSchedule, trafficModel);
 
-        new SimulatorWindow().lunch();
+        new SimulatorGUI(simulator).lunch();
     }
 
 }

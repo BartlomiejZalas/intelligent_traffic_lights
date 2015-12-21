@@ -4,10 +4,15 @@ package com.zalas.traffic.simulator;
 import javax.swing.*;
 import java.awt.*;
 
-public class SimulatorWindow extends JFrame {
+public class SimulatorGUI extends JFrame {
 
     private final DrawPane drawPane = new DrawPane();
     private JButton nextIterationButton = new JButton("Next iteration >>");
+    private Simulator simulator;
+
+    public SimulatorGUI(Simulator simulator) {
+        this.simulator = simulator;
+    }
 
     public void lunch() {
 

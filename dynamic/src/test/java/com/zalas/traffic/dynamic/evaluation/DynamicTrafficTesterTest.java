@@ -33,7 +33,7 @@ public class DynamicTrafficTesterTest {
     @Test
     public void test_shouldReturnTrue_whenResultsAreAsExpected() throws Exception {
         given(dataset.getDataRows()).willReturn(newArrayList(new DataRow(new double[]{1.0, 2.0, 3.0, 4.0}, 5.0)));
-        given(dynamicTrafficController.getLightCycle(newArrayList(1, 2, 3, 4))).willReturn(5);
+        given(dynamicTrafficController.getLightCycle(1, 2, 3, 4)).willReturn(5);
 
         List<TestResult> results = dynamicTrafficTester.test();
 
@@ -45,7 +45,7 @@ public class DynamicTrafficTesterTest {
     @Test
     public void test_shouldReturnFalse_whenResultsAreDifferentThanExpected() throws Exception {
         given(dataset.getDataRows()).willReturn(newArrayList(new DataRow(new double[]{1.0, 2.0, 3.0, 4.0}, 5.0)));
-        given(dynamicTrafficController.getLightCycle(newArrayList(1, 2, 3, 4))).willReturn(8);
+        given(dynamicTrafficController.getLightCycle(1, 2, 3, 4)).willReturn(8);
 
         List<TestResult> results = dynamicTrafficTester.test();
 
@@ -61,9 +61,9 @@ public class DynamicTrafficTesterTest {
         DataRow dataRow3 = new DataRow(new double[]{4.0, 3.0, 2.0, 1.0}, 10.0);
         given(dataset.getDataRows()).willReturn(newArrayList(dataRow1, dataRow2, dataRow3));
 
-        given(dynamicTrafficController.getLightCycle(newArrayList(1, 2, 3, 4))).willReturn(5);
-        given(dynamicTrafficController.getLightCycle(newArrayList(2, 2, 2, 2))).willReturn(-2);
-        given(dynamicTrafficController.getLightCycle(newArrayList(4, 3, 2, 1))).willReturn(10);
+        given(dynamicTrafficController.getLightCycle(1, 2, 3, 4)).willReturn(5);
+        given(dynamicTrafficController.getLightCycle(2, 2, 2, 2)).willReturn(-2);
+        given(dynamicTrafficController.getLightCycle(4, 3, 2, 1)).willReturn(10);
 
         List<TestResult> results = dynamicTrafficTester.test();
 
