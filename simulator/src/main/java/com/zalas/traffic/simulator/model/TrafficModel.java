@@ -8,6 +8,11 @@ public class TrafficModel {
     private int trafficEast;
     private int trafficSouth;
     private int trafficWest;
+    public int lightCycle;
+
+    public int getLightCycle() {
+        return lightCycle;
+    }
 
     public void nextIteration() {
         this.iteration++;
@@ -63,5 +68,22 @@ public class TrafficModel {
 
     public int getTrafficWest() {
         return trafficWest;
+    }
+
+    public void increaseDirection(TrafficDirection trafficDirection) {
+        switch (trafficDirection) {
+            case EAST:
+                increaseEast();
+                break;
+            case WEST:
+                increaseWest();
+                break;
+            case NORTH:
+                increaseNorth();
+                break;
+            case SOUTH:
+                increaseSouth();
+                break;
+        }
     }
 }

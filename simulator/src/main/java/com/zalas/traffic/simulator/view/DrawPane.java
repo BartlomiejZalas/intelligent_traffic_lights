@@ -1,11 +1,16 @@
 package com.zalas.traffic.simulator.view;
 
+import com.zalas.traffic.simulator.model.TrafficModel;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class DrawPane extends JPanel {
 
-    public DrawPane() {
+    private final TrafficModel trafficModel;
+
+    public DrawPane(TrafficModel trafficModel) {
+        this.trafficModel = trafficModel;
         setPreferredSize(new Dimension(400, 400));
     }
 
@@ -20,7 +25,7 @@ public class DrawPane extends JPanel {
         g.fillRect(width / 3, 0, width / 3, height);
         g.fillRect(0, height / 3, width, height / 3);
 
-        String s = "" + (int)(Math.random()*4);
+        String s = "" + trafficModel.getTrafficNorth();
         g2d.setFont(new Font("Arial", Font.BOLD, getFontSize(width, height)));
         g2d.setColor(Color.WHITE);
         int stringLen = (int) g2d.getFontMetrics().getStringBounds(s, g2d).getWidth();

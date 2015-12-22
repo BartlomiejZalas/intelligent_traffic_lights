@@ -1,6 +1,7 @@
 package com.zalas.traffic.simulator;
 
 import com.zalas.traffic.dynamic.controller.DynamicTrafficController;
+import com.zalas.traffic.simulator.controller.movevehicles.MoveVehiclesStrategy;
 import com.zalas.traffic.simulator.controller.movevehicles.MoveVehiclesStrategyFactory;
 import com.zalas.traffic.simulator.model.TrafficEvent;
 import com.zalas.traffic.simulator.model.TrafficModel;
@@ -20,8 +21,8 @@ public class Simulator {
         this.trafficModel = trafficModel;
     }
 
-    public int getLightCycle() {
-        return controller.getLightCycle(
+    public void changeLightCycle() {
+        trafficModel.lightCycle =  controller.getLightCycle(
                 trafficModel.getTrafficNorth(),
                 trafficModel.getTrafficEast(),
                 trafficModel.getTrafficSouth(),
@@ -29,12 +30,18 @@ public class Simulator {
         );
     }
 
-    public void moveVehicles(int lightCycle) {
-        new MoveVehiclesStrategyFactory().getStrategy(lightCycle).moveVehicles(trafficModel);
+    public void moveVehicles() {
+        MoveVehiclesStrategy strategy = new MoveVehiclesStrategyFactory().getStrategy(trafficModel.getLightCycle());
+        strategy.moveVehicles(trafficModel);
     }
 
     public void handleTraffic() {
         List<TrafficEvent> trafficEvents = trafficSchedule.getEventsForIteration(trafficModel.getIteration());
+        trafficEvents.stream()
+                .forEach(te -> trafficModel.increaseDirection(te.getTrafficDirection()));
     }
 
+    public TrafficModel getTrafficModel() {
+        return trafficModel;
+    }
 }

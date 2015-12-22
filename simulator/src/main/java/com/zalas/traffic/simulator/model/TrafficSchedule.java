@@ -18,7 +18,11 @@ public class TrafficSchedule {
     }
 
     public List<TrafficEvent> getEventsForIteration(int iteration) {
-        return eventsInIterations.get(iteration);
+        List<TrafficEvent> trafficEvents = eventsInIterations.get(iteration);
+        if (trafficEvents == null) {
+            return newArrayList();
+        }
+        return trafficEvents;
     }
 
 }
