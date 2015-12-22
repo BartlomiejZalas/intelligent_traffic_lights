@@ -13,14 +13,21 @@ public class SimLauncher {
     public static void main(String[] args) throws Exception {
 
         DynamicTrafficController controller = new DynamicTrafficController(NeuralNetwork.load("dynamicNN.nnet"));
-        TrafficSchedule trafficSchedule = new TrafficSchedule();
-        trafficSchedule.registerEvent(1, new TrafficEvent(TrafficDirection.NORTH, 1));
-        trafficSchedule.registerEvent(2, new TrafficEvent(TrafficDirection.NORTH, 1));
-        trafficSchedule.registerEvent(0, new TrafficEvent(TrafficDirection.NORTH, 1));
+        TrafficSchedule trafficSchedule = createSchedule();
         TrafficModel trafficModel = new TrafficModel();
         Simulator simulator = new Simulator(controller, trafficSchedule, trafficModel);
 
         new SimulatorGUI(simulator).lunch();
+    }
+
+    private static TrafficSchedule createSchedule() {
+        TrafficSchedule trafficSchedule = new TrafficSchedule();
+        trafficSchedule.registerEvent(0, new TrafficEvent(TrafficDirection.NORTH, 1));
+        trafficSchedule.registerEvent(0, new TrafficEvent(TrafficDirection.EAST, 1));
+        trafficSchedule.registerEvent(0, new TrafficEvent(TrafficDirection.SOUTH, 1));
+        trafficSchedule.registerEvent(0, new TrafficEvent(TrafficDirection.WEST, 1));
+
+        return trafficSchedule;
     }
 
 }

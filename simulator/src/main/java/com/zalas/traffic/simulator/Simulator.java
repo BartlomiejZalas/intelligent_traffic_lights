@@ -44,4 +44,8 @@ public class Simulator {
     public TrafficModel getTrafficModel() {
         return trafficModel;
     }
+
+    public void nextIteration() {
+        trafficModel.nextIteration();
+    }
 }

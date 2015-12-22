@@ -8,10 +8,16 @@ import java.awt.*;
 
 public class SimulatorGUI extends JFrame {
 
-    private DrawPane drawPane;
+    private static final String ITERATION = "Iteration: ";
+
     private JButton nextLightsButton = new JButton("Change Light Cycle");
     private JButton nextMoveVehiclesButton = new JButton("Move Vehicles");
     private JButton nextIncomingTrafficButton = new JButton("Add Incoming Traffic");
+    private JButton nextIteration = new JButton("Next Iteration");
+
+    private DrawPane drawPane;
+    private JLabel iterationStatsLabel;
+
     private Simulator simulator;
 
     public SimulatorGUI(Simulator simulator) {
@@ -21,17 +27,31 @@ public class SimulatorGUI extends JFrame {
 
     public void lunch() {
 
-        JFrame frame = new JFrame("FrameDemo");
+        JFrame frame = new JFrame("Traffic Simulator");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().add(drawPane, BorderLayout.CENTER);
         frame.getContentPane().add(createButtonsPanel(), BorderLayout.SOUTH);
+        frame.getContentPane().add(createStatsPanel(), BorderLayout.EAST);
         frame.pack();
         frame.setVisible(true);
 
         nextLightsButton.addActionListener(e -> changeLightCycle());
         nextMoveVehiclesButton.addActionListener(e -> moveVehicles());
         nextIncomingTrafficButton.addActionListener(e -> handleIncomingTraffic());
+        nextIteration.addActionListener(e -> startNextIteration());
 
+    }
+
+    private JPanel createStatsPanel() {
+        JPanel statsPanel = new JPanel();
+        iterationStatsLabel = new JLabel(ITERATION + simulator.getTrafficModel().getIteration());
+        statsPanel.add(iterationStatsLabel);
+        return statsPanel;
+    }
+
+    private void startNextIteration() {
+        simulator.nextIteration();
+        iterationStatsLabel.setText(ITERATION + simulator.getTrafficModel().getIteration());
     }
 
     private JPanel createButtonsPanel() {
@@ -39,6 +59,7 @@ public class SimulatorGUI extends JFrame {
         buttons.add(nextLightsButton);
         buttons.add(nextMoveVehiclesButton);
         buttons.add(nextIncomingTrafficButton);
+        buttons.add(nextIteration);
         return buttons;
     }
 
