@@ -1,4 +1,6 @@
-package com.zalas.traffic.simulator;
+package com.zalas.traffic.simulator.controller.movevehicles;
+
+import com.zalas.traffic.simulator.controller.movevehicles.strategy.EastStrategy;
 
 public class MoveVehiclesStrategyFactory {
     public MoveVehiclesStrategy getStrategy(int lightCycle) {
