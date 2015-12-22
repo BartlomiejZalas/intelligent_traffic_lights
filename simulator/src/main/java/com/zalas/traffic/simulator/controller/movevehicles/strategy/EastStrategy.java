@@ -6,6 +6,6 @@ import com.zalas.traffic.simulator.model.TrafficModel;
 public class EastStrategy implements MoveVehiclesStrategy {
     @Override
     public void moveVehicles(TrafficModel trafficModel) {
-
+        trafficModel.decreaseEast();
     }
 }
