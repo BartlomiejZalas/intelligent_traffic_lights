@@ -8,15 +8,13 @@ import java.awt.*;
 
 public class SimulatorGUI extends JFrame {
 
-    private static final String ITERATION = "Iteration: ";
-
     private JButton nextLightsButton = new JButton("Change Light Cycle");
     private JButton nextMoveVehiclesButton = new JButton("Move Vehicles");
     private JButton nextIncomingTrafficButton = new JButton("Add Incoming Traffic");
     private JButton nextIteration = new JButton("Next Iteration");
 
     private DrawPane drawPane;
-    private JLabel iterationStatsLabel;
+    private StatsTable statsTable = new StatsTable();
 
     private Simulator simulator;
 
@@ -35,23 +33,32 @@ public class SimulatorGUI extends JFrame {
         frame.pack();
         frame.setVisible(true);
 
+        addActionToButtons();
+
+    }
+
+    private void addActionToButtons() {
         nextLightsButton.addActionListener(e -> changeLightCycle());
         nextMoveVehiclesButton.addActionListener(e -> moveVehicles());
         nextIncomingTrafficButton.addActionListener(e -> handleIncomingTraffic());
         nextIteration.addActionListener(e -> startNextIteration());
-
     }
 
     private JPanel createStatsPanel() {
-        JPanel statsPanel = new JPanel();
-        iterationStatsLabel = new JLabel(ITERATION + simulator.getTrafficModel().getIteration());
-        statsPanel.add(iterationStatsLabel);
+        JPanel statsPanel = new JPanel(new BorderLayout());
+        statsPanel.add(statsTable.getTableHeader(), BorderLayout.NORTH);
+        statsPanel.add(statsTable, BorderLayout.CENTER);
+        statsTable.setIteration(simulator.getTrafficModel().getIteration());
+        statsTable.setTrafficNorth(simulator.getTrafficModel().getTrafficNorth());
+        statsTable.setTrafficEast(simulator.getTrafficModel().getTrafficEast());
+        statsTable.setTrafficSouth(simulator.getTrafficModel().getTrafficSouth());
+        statsTable.setTrafficWest(simulator.getTrafficModel().getTrafficWest());
         return statsPanel;
     }
 
     private void startNextIteration() {
         simulator.nextIteration();
-        iterationStatsLabel.setText(ITERATION + simulator.getTrafficModel().getIteration());
+        statsTable.setIteration(simulator.getTrafficModel().getIteration());
     }
 
     private JPanel createButtonsPanel() {
