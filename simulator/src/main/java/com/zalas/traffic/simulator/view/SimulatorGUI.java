@@ -34,6 +34,7 @@ public class SimulatorGUI extends JFrame {
         frame.setVisible(true);
 
         addActionToButtons();
+        enableButton(nextLightsButton);
 
     }
 
@@ -52,12 +53,6 @@ public class SimulatorGUI extends JFrame {
         return statsPanel;
     }
 
-    private void startNextIteration() {
-        simulator.nextIteration();
-        updateStatsTable();
-        drawPane.repaint();
-    }
-
     private JPanel createButtonsPanel() {
         JPanel buttons = new JPanel();
         buttons.add(nextLightsButton);
@@ -67,19 +62,38 @@ public class SimulatorGUI extends JFrame {
         return buttons;
     }
 
-    private void handleIncomingTraffic() {
-        simulator.handleTraffic();
+    private void changeLightCycle() {
+        simulator.changeLightCycle();
+        enableButton(nextMoveVehiclesButton);
         drawPane.repaint();
     }
 
     private void moveVehicles() {
         simulator.moveVehicles();
+        enableButton(nextIncomingTrafficButton);
         drawPane.repaint();
     }
 
-    private void changeLightCycle() {
-        simulator.changeLightCycle();
+    private void handleIncomingTraffic() {
+        simulator.handleTraffic();
+        enableButton(nextIteration);
         drawPane.repaint();
+    }
+
+    private void startNextIteration() {
+        simulator.nextIteration();
+        updateStatsTable();
+        enableButton(nextLightsButton);
+        drawPane.repaint();
+    }
+
+    private void enableButton(JButton activeButton) {
+        nextLightsButton.setEnabled(false);
+        nextMoveVehiclesButton.setEnabled(false);
+        nextIncomingTrafficButton.setEnabled(false);
+        nextIteration.setEnabled(false);
+
+        activeButton.setEnabled(true);
     }
 
     private void updateStatsTable() {
