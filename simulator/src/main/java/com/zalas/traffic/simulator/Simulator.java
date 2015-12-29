@@ -37,12 +37,16 @@ public class Simulator {
         trafficEvents.stream().forEach(te -> trafficModel.increaseDirection(te.getTrafficDirection()));
     }
 
+    public void nextIteration() {
+        trafficModel.nextIteration();
+        trafficModel.setLightCycle(null);
+    }
+
     public TrafficModel getTrafficModel() {
         return trafficModel;
     }
 
-    public void nextIteration() {
-        trafficModel.nextIteration();
-        trafficModel.setLightCycle(null);
+    public String getControllerType() {
+        return controller.getClass().getSimpleName();
     }
 }

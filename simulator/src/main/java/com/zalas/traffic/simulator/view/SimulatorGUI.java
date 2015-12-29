@@ -25,7 +25,7 @@ public class SimulatorGUI extends JFrame {
 
     public void lunch() {
 
-        JFrame frame = new JFrame("Traffic Simulator");
+        JFrame frame = new JFrame("Traffic Simulator :: " + simulator.getControllerType());
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.getContentPane().add(drawPane, BorderLayout.CENTER);
         frame.getContentPane().add(createButtonsPanel(), BorderLayout.SOUTH);
