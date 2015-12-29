@@ -8,7 +8,7 @@ public class TrafficModel {
     private int trafficEast;
     private int trafficSouth;
     private int trafficWest;
-    public LightCycle lightCycle;
+    private LightCycle lightCycle;
 
     public LightCycle getLightCycle() {
         return lightCycle;
@@ -102,5 +102,9 @@ public class TrafficModel {
                 decreaseSouth();
                 break;
         }
+    }
+
+    public void setLightCycle(LightCycle lightCycle) {
+        this.lightCycle = lightCycle;
     }
 }

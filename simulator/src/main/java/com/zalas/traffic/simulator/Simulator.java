@@ -24,7 +24,7 @@ public class Simulator {
                 trafficModel.getTrafficSouth(),
                 trafficModel.getTrafficWest()
         ));
-        trafficModel.lightCycle = lc;
+        trafficModel.setLightCycle(lc);
     }
 
     public void moveVehicles() {
@@ -43,5 +43,6 @@ public class Simulator {
 
     public void nextIteration() {
         trafficModel.nextIteration();
+        trafficModel.setLightCycle(null);
     }
 }

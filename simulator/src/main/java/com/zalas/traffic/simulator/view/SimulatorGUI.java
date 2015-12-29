@@ -26,7 +26,7 @@ public class SimulatorGUI extends JFrame {
     public void lunch() {
 
         JFrame frame = new JFrame("Traffic Simulator");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.getContentPane().add(drawPane, BorderLayout.CENTER);
         frame.getContentPane().add(createButtonsPanel(), BorderLayout.SOUTH);
         frame.getContentPane().add(createStatsPanel(), BorderLayout.EAST);
@@ -48,17 +48,14 @@ public class SimulatorGUI extends JFrame {
         JPanel statsPanel = new JPanel(new BorderLayout());
         statsPanel.add(statsTable.getTableHeader(), BorderLayout.NORTH);
         statsPanel.add(statsTable, BorderLayout.CENTER);
-        statsTable.setIteration(simulator.getTrafficModel().getIteration());
-        statsTable.setTrafficNorth(simulator.getTrafficModel().getTrafficNorth());
-        statsTable.setTrafficEast(simulator.getTrafficModel().getTrafficEast());
-        statsTable.setTrafficSouth(simulator.getTrafficModel().getTrafficSouth());
-        statsTable.setTrafficWest(simulator.getTrafficModel().getTrafficWest());
+        updateStatsTable();
         return statsPanel;
     }
 
     private void startNextIteration() {
         simulator.nextIteration();
-        statsTable.setIteration(simulator.getTrafficModel().getIteration());
+        updateStatsTable();
+        drawPane.repaint();
     }
 
     private JPanel createButtonsPanel() {
@@ -83,5 +80,13 @@ public class SimulatorGUI extends JFrame {
     private void changeLightCycle() {
         simulator.changeLightCycle();
         drawPane.repaint();
+    }
+
+    private void updateStatsTable() {
+        statsTable.setIteration(simulator.getTrafficModel().getIteration());
+        statsTable.setTrafficNorth(simulator.getTrafficModel().getTrafficNorth());
+        statsTable.setTrafficEast(simulator.getTrafficModel().getTrafficEast());
+        statsTable.setTrafficSouth(simulator.getTrafficModel().getTrafficSouth());
+        statsTable.setTrafficWest(simulator.getTrafficModel().getTrafficWest());
     }
 }
