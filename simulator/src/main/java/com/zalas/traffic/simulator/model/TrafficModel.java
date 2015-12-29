@@ -8,9 +8,9 @@ public class TrafficModel {
     private int trafficEast;
     private int trafficSouth;
     private int trafficWest;
-    public int lightCycle;
+    public LightCycle lightCycle;
 
-    public int getLightCycle() {
+    public LightCycle getLightCycle() {
         return lightCycle;
     }
 
@@ -83,6 +83,23 @@ public class TrafficModel {
                 break;
             case SOUTH:
                 increaseSouth();
+                break;
+        }
+    }
+
+    public void decreaseDirection(TrafficDirection trafficDirection) {
+        switch (trafficDirection) {
+            case EAST:
+                decreaseEast();
+                break;
+            case WEST:
+                decreaseWest();
+                break;
+            case NORTH:
+                decreaseNorth();
+                break;
+            case SOUTH:
+                decreaseSouth();
                 break;
         }
     }

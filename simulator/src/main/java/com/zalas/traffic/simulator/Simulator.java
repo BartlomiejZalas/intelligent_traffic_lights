@@ -1,11 +1,7 @@
 package com.zalas.traffic.simulator;
 
 import com.zalas.traffic.dynamic.controller.DynamicTrafficController;
-import com.zalas.traffic.simulator.controller.movevehicles.MoveVehiclesStrategy;
-import com.zalas.traffic.simulator.controller.movevehicles.MoveVehiclesStrategyFactory;
-import com.zalas.traffic.simulator.model.TrafficEvent;
-import com.zalas.traffic.simulator.model.TrafficModel;
-import com.zalas.traffic.simulator.model.TrafficSchedule;
+import com.zalas.traffic.simulator.model.*;
 
 import java.util.List;
 
@@ -22,23 +18,23 @@ public class Simulator {
     }
 
     public void changeLightCycle() {
-        trafficModel.lightCycle =  controller.getLightCycle(
+        LightCycle lc = LightCycle.getByNumber(controller.getLightCycle(
                 trafficModel.getTrafficNorth(),
                 trafficModel.getTrafficEast(),
                 trafficModel.getTrafficSouth(),
                 trafficModel.getTrafficWest()
-        );
+        ));
+        trafficModel.lightCycle = lc;
     }
 
     public void moveVehicles() {
-        MoveVehiclesStrategy strategy = new MoveVehiclesStrategyFactory().getStrategy(trafficModel.getLightCycle());
-        strategy.moveVehicles(trafficModel);
+        trafficModel.getLightCycle().getTrafficFlows().stream()
+                .forEach(flow -> trafficModel.decreaseDirection(flow.getFrom()));
     }
 
     public void handleTraffic() {
         List<TrafficEvent> trafficEvents = trafficSchedule.getEventsForIteration(trafficModel.getIteration());
-        trafficEvents.stream()
-                .forEach(te -> trafficModel.increaseDirection(te.getTrafficDirection()));
+        trafficEvents.stream().forEach(te -> trafficModel.increaseDirection(te.getTrafficDirection()));
     }
 
     public TrafficModel getTrafficModel() {
