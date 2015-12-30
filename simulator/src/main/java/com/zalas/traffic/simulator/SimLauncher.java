@@ -1,6 +1,7 @@
 package com.zalas.traffic.simulator;
 
 import com.zalas.traffic.dynamic.controller.DynamicTrafficController;
+import com.zalas.traffic.dynamic.controller.StaticTrafficController;
 import com.zalas.traffic.dynamic.network.NeuralNetwork;
 import com.zalas.traffic.simulator.model.TrafficDirection;
 import com.zalas.traffic.simulator.model.TrafficEvent;
@@ -13,6 +14,7 @@ public class SimLauncher {
     public static void main(String[] args) throws Exception {
 
         DynamicTrafficController dynamicTrafficController = new DynamicTrafficController(NeuralNetwork.load("dynamicNN.nnet"));
+        StaticTrafficController staticTrafficController = new StaticTrafficController();
 
         TrafficSchedule trafficSchedule = createSchedule();
         TrafficModel trafficModel = new TrafficModel();
