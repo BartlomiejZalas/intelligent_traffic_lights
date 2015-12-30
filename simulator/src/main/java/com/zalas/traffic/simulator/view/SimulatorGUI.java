@@ -34,7 +34,7 @@ public class SimulatorGUI extends JFrame {
         frame.setVisible(true);
 
         addActionToButtons();
-        enableButton(nextLightsButton);
+        enableButton(nextIncomingTrafficButton);
 
     }
 
@@ -55,9 +55,9 @@ public class SimulatorGUI extends JFrame {
 
     private JPanel createButtonsPanel() {
         JPanel buttons = new JPanel();
+        buttons.add(nextIncomingTrafficButton);
         buttons.add(nextLightsButton);
         buttons.add(nextMoveVehiclesButton);
-        buttons.add(nextIncomingTrafficButton);
         buttons.add(nextIteration);
         return buttons;
     }
@@ -70,20 +70,20 @@ public class SimulatorGUI extends JFrame {
 
     private void moveVehicles() {
         simulator.moveVehicles();
-        enableButton(nextIncomingTrafficButton);
+        enableButton(nextIteration);
         drawPane.repaint();
     }
 
     private void handleIncomingTraffic() {
         simulator.handleTraffic();
-        enableButton(nextIteration);
+        enableButton(nextLightsButton);
         drawPane.repaint();
     }
 
     private void startNextIteration() {
         simulator.nextIteration();
         updateStatsTable();
-        enableButton(nextLightsButton);
+        enableButton(nextIncomingTrafficButton);
         drawPane.repaint();
     }
 

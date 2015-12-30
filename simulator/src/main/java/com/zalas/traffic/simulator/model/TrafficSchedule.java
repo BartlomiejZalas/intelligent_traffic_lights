@@ -13,8 +13,9 @@ public class TrafficSchedule {
     public void registerEvent(int iteration, TrafficEvent event) {
         if (eventsInIterations.containsKey(iteration)) {
             eventsInIterations.get(iteration).add(event);
+        } else {
+            eventsInIterations.put(iteration, newArrayList(event));
         }
-        eventsInIterations.put(iteration, newArrayList(event));
     }
 
     public List<TrafficEvent> getEventsForIteration(int iteration) {

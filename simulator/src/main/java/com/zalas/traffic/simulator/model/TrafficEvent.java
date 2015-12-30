@@ -17,4 +17,12 @@ public class TrafficEvent {
     public int getVehiclesAdded() {
         return vehiclesAdded;
     }
+
+    @Override
+    public String toString() {
+        return "TrafficEvent{" +
+                "trafficDirection=" + trafficDirection +
+                ", vehiclesAdded=" + vehiclesAdded +
+                '}';
+    }
 }

@@ -12,20 +12,37 @@ public class SimLauncher {
 
     public static void main(String[] args) throws Exception {
 
-        DynamicTrafficController controller = new DynamicTrafficController(NeuralNetwork.load("dynamicNN.nnet"));
+        DynamicTrafficController dynamicTrafficController = new DynamicTrafficController(NeuralNetwork.load("dynamicNN.nnet"));
+
         TrafficSchedule trafficSchedule = createSchedule();
         TrafficModel trafficModel = new TrafficModel();
-        Simulator simulator = new Simulator(controller, trafficSchedule, trafficModel);
+        Simulator simulator = new Simulator(dynamicTrafficController, trafficSchedule, trafficModel);
 
         new SimulatorGUI(simulator).lunch();
     }
 
     private static TrafficSchedule createSchedule() {
         TrafficSchedule trafficSchedule = new TrafficSchedule();
-        trafficSchedule.registerEvent(0, new TrafficEvent(TrafficDirection.NORTH, 1));
-        trafficSchedule.registerEvent(0, new TrafficEvent(TrafficDirection.EAST, 1));
-        trafficSchedule.registerEvent(0, new TrafficEvent(TrafficDirection.SOUTH, 1));
-        trafficSchedule.registerEvent(0, new TrafficEvent(TrafficDirection.WEST, 1));
+        trafficSchedule.registerEvent(0, new TrafficEvent(TrafficDirection.NORTH, 10));
+        trafficSchedule.registerEvent(0, new TrafficEvent(TrafficDirection.NORTH, 10));
+        trafficSchedule.registerEvent(0, new TrafficEvent(TrafficDirection.NORTH, 10));
+        trafficSchedule.registerEvent(0, new TrafficEvent(TrafficDirection.NORTH, 10));
+        trafficSchedule.registerEvent(0, new TrafficEvent(TrafficDirection.NORTH, 10));
+        trafficSchedule.registerEvent(0, new TrafficEvent(TrafficDirection.EAST, 10));
+        trafficSchedule.registerEvent(0, new TrafficEvent(TrafficDirection.EAST, 10));
+        trafficSchedule.registerEvent(0, new TrafficEvent(TrafficDirection.EAST, 10));
+        trafficSchedule.registerEvent(0, new TrafficEvent(TrafficDirection.EAST, 10));
+        trafficSchedule.registerEvent(0, new TrafficEvent(TrafficDirection.EAST, 10));
+        trafficSchedule.registerEvent(0, new TrafficEvent(TrafficDirection.SOUTH, 10));
+        trafficSchedule.registerEvent(0, new TrafficEvent(TrafficDirection.SOUTH, 10));
+        trafficSchedule.registerEvent(0, new TrafficEvent(TrafficDirection.SOUTH, 10));
+        trafficSchedule.registerEvent(0, new TrafficEvent(TrafficDirection.SOUTH, 10));
+        trafficSchedule.registerEvent(0, new TrafficEvent(TrafficDirection.SOUTH, 10));
+        trafficSchedule.registerEvent(0, new TrafficEvent(TrafficDirection.WEST, 10));
+        trafficSchedule.registerEvent(0, new TrafficEvent(TrafficDirection.WEST, 10));
+        trafficSchedule.registerEvent(0, new TrafficEvent(TrafficDirection.WEST, 10));
+        trafficSchedule.registerEvent(0, new TrafficEvent(TrafficDirection.WEST, 10));
+        trafficSchedule.registerEvent(0, new TrafficEvent(TrafficDirection.WEST, 10));
 
         return trafficSchedule;
     }
