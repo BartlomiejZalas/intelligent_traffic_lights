@@ -9,17 +9,15 @@ import com.zalas.traffic.simulator.model.TrafficSchedule;
 import java.util.List;
 
 public class Simulator {
+    private static final int VEHICLES_MOVED = 50;
     private final TrafficController controller;
     private final TrafficSchedule trafficSchedule;
     private final TrafficModel trafficModel;
 
     public Simulator(TrafficController controller, TrafficSchedule trafficSchedule, TrafficModel trafficModel) {
-
         this.controller = controller;
         this.trafficSchedule = trafficSchedule;
         this.trafficModel = trafficModel;
-
-
     }
 
     public void changeLightCycle() {
@@ -34,12 +32,12 @@ public class Simulator {
 
     public void moveVehicles() {
         trafficModel.getLightCycle().getTrafficFlows().stream()
-                .forEach(flow -> trafficModel.decreaseDirection(flow.getFrom()));
+                .forEach(flow -> trafficModel.decreaseDirection(flow.getFrom(), VEHICLES_MOVED));
     }
 
     public void handleTraffic() {
         List<TrafficEvent> trafficEvents = trafficSchedule.getEventsForIteration(trafficModel.getIteration());
-        trafficEvents.stream().forEach(te -> trafficModel.increaseDirection(te.getTrafficDirection()));
+        trafficEvents.stream().forEach(te -> trafficModel.increaseDirection(te.getTrafficDirection(), te.getVehiclesAdded()));
     }
 
     public void nextIteration() {

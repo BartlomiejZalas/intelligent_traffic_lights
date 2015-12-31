@@ -30,26 +30,10 @@ public class SimLauncher {
 
     private static TrafficSchedule createSchedule() {
         TrafficSchedule trafficSchedule = new TrafficSchedule();
-        trafficSchedule.registerEvent(0, new TrafficEvent(TrafficDirection.NORTH, 10));
-        trafficSchedule.registerEvent(0, new TrafficEvent(TrafficDirection.NORTH, 10));
-        trafficSchedule.registerEvent(0, new TrafficEvent(TrafficDirection.NORTH, 10));
-        trafficSchedule.registerEvent(0, new TrafficEvent(TrafficDirection.NORTH, 10));
-        trafficSchedule.registerEvent(0, new TrafficEvent(TrafficDirection.NORTH, 10));
-        trafficSchedule.registerEvent(0, new TrafficEvent(TrafficDirection.EAST, 10));
-        trafficSchedule.registerEvent(0, new TrafficEvent(TrafficDirection.EAST, 10));
-        trafficSchedule.registerEvent(0, new TrafficEvent(TrafficDirection.EAST, 10));
-        trafficSchedule.registerEvent(0, new TrafficEvent(TrafficDirection.EAST, 10));
-        trafficSchedule.registerEvent(0, new TrafficEvent(TrafficDirection.EAST, 10));
-        trafficSchedule.registerEvent(0, new TrafficEvent(TrafficDirection.SOUTH, 10));
-        trafficSchedule.registerEvent(0, new TrafficEvent(TrafficDirection.SOUTH, 10));
-        trafficSchedule.registerEvent(0, new TrafficEvent(TrafficDirection.SOUTH, 10));
-        trafficSchedule.registerEvent(0, new TrafficEvent(TrafficDirection.SOUTH, 10));
-        trafficSchedule.registerEvent(0, new TrafficEvent(TrafficDirection.SOUTH, 10));
-        trafficSchedule.registerEvent(0, new TrafficEvent(TrafficDirection.WEST, 10));
-        trafficSchedule.registerEvent(0, new TrafficEvent(TrafficDirection.WEST, 10));
-        trafficSchedule.registerEvent(0, new TrafficEvent(TrafficDirection.WEST, 10));
-        trafficSchedule.registerEvent(0, new TrafficEvent(TrafficDirection.WEST, 10));
-        trafficSchedule.registerEvent(0, new TrafficEvent(TrafficDirection.WEST, 10));
+        trafficSchedule.registerEvent(0, new TrafficEvent(TrafficDirection.NORTH, 100));
+        trafficSchedule.registerEvent(0, new TrafficEvent(TrafficDirection.EAST, 100));
+        trafficSchedule.registerEvent(0, new TrafficEvent(TrafficDirection.SOUTH, 100));
+        trafficSchedule.registerEvent(0, new TrafficEvent(TrafficDirection.WEST, 100));
 
         return trafficSchedule;
     }

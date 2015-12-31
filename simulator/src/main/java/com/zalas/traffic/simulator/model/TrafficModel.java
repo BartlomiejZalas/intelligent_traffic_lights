@@ -18,36 +18,36 @@ public class TrafficModel {
         this.iteration++;
     }
 
-    public void increaseNorth() {
-        this.trafficNorth++;
+    public void increaseNorth(int vehiclesAdded) {
+        this.trafficNorth += vehiclesAdded;
     }
 
-    public void decreaseNorth() {
-        this.trafficNorth--;
+    public void decreaseNorth(int vehiclesMoved) {
+        this.trafficNorth = decreaseTraffic(trafficNorth, vehiclesMoved);
     }
 
-    public void increaseEast() {
-        this.trafficEast++;
+    public void increaseEast(int vehiclesAdded) {
+        this.trafficEast += vehiclesAdded;
     }
 
-    public void decreaseEast() {
-        this.trafficEast--;
+    public void decreaseEast(int vehiclesMoved) {
+        this.trafficEast = decreaseTraffic(trafficEast, vehiclesMoved);
     }
 
-    public void increaseSouth() {
-        this.trafficSouth++;
+    public void increaseSouth(int vehiclesAdded) {
+        this.trafficSouth += vehiclesAdded;
     }
 
-    public void decreaseSouth() {
-        this.trafficSouth--;
+    public void decreaseSouth(int vehiclesMoved) {
+        this.trafficSouth = decreaseTraffic(trafficSouth, vehiclesMoved);
     }
 
-    public void increaseWest() {
-        this.trafficWest++;
+    public void increaseWest(int vehiclesAdded) {
+        this.trafficWest += vehiclesAdded;
     }
 
-    public void decreaseWest() {
-        this.trafficWest--;
+    public void decreaseWest(int vehiclesMoved) {
+        this.trafficWest = decreaseTraffic(trafficWest, vehiclesMoved);
     }
 
     public int getIteration() {
@@ -70,36 +70,36 @@ public class TrafficModel {
         return trafficWest;
     }
 
-    public void increaseDirection(TrafficDirection trafficDirection) {
+    public void increaseDirection(TrafficDirection trafficDirection, int vehiclesAdded) {
         switch (trafficDirection) {
             case EAST:
-                increaseEast();
+                increaseEast(vehiclesAdded);
                 break;
             case WEST:
-                increaseWest();
+                increaseWest(vehiclesAdded);
                 break;
             case NORTH:
-                increaseNorth();
+                increaseNorth(vehiclesAdded);
                 break;
             case SOUTH:
-                increaseSouth();
+                increaseSouth(vehiclesAdded);
                 break;
         }
     }
 
-    public void decreaseDirection(TrafficDirection trafficDirection) {
+    public void decreaseDirection(TrafficDirection trafficDirection, int vehiclesMoved) {
         switch (trafficDirection) {
             case EAST:
-                decreaseEast();
+                decreaseEast(vehiclesMoved);
                 break;
             case WEST:
-                decreaseWest();
+                decreaseWest(vehiclesMoved);
                 break;
             case NORTH:
-                decreaseNorth();
+                decreaseNorth(vehiclesMoved);
                 break;
             case SOUTH:
-                decreaseSouth();
+                decreaseSouth(vehiclesMoved);
                 break;
         }
     }
@@ -107,4 +107,12 @@ public class TrafficModel {
     public void setLightCycle(LightCycle lightCycle) {
         this.lightCycle = lightCycle;
     }
+
+    private int decreaseTraffic(int currentTraffic, int vehiclesMoved) {
+        if (currentTraffic < vehiclesMoved) {
+            return 0;
+        }
+        return currentTraffic - vehiclesMoved;
+    }
+
 }
