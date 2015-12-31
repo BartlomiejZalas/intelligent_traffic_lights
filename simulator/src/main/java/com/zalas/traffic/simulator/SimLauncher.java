@@ -30,10 +30,10 @@ public class SimLauncher {
 
     private static TrafficSchedule createSchedule() {
         TrafficSchedule trafficSchedule = new TrafficSchedule();
-        trafficSchedule.registerEvent(0, new TrafficEvent(TrafficDirection.NORTH, 100));
-        trafficSchedule.registerEvent(0, new TrafficEvent(TrafficDirection.EAST, 100));
-        trafficSchedule.registerEvent(0, new TrafficEvent(TrafficDirection.SOUTH, 100));
-        trafficSchedule.registerEvent(0, new TrafficEvent(TrafficDirection.WEST, 100));
+        trafficSchedule.registerEvent(0, new TrafficEvent(TrafficDirection.NORTH, 201));
+        trafficSchedule.registerEvent(0, new TrafficEvent(TrafficDirection.EAST, 201));
+        trafficSchedule.registerEvent(0, new TrafficEvent(TrafficDirection.SOUTH, 201));
+        trafficSchedule.registerEvent(0, new TrafficEvent(TrafficDirection.WEST, 201));
 
         return trafficSchedule;
     }
