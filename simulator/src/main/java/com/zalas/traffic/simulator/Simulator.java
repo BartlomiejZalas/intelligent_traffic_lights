@@ -39,7 +39,6 @@ public class Simulator {
 
     public void handleTraffic() {
         List<TrafficEvent> trafficEvents = trafficSchedule.getEventsForIteration(trafficModel.getIteration());
-        System.out.println(trafficEvents);
         trafficEvents.stream().forEach(te -> trafficModel.increaseDirection(te.getTrafficDirection()));
     }
 
