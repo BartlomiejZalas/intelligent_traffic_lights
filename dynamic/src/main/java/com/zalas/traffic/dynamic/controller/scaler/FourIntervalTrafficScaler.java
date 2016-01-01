@@ -1,6 +1,6 @@
-package com.zalas.traffic.dynamic.controller;
+package com.zalas.traffic.dynamic.controller.scaler;
 
-public class TrafficScaler {
+public class FourIntervalTrafficScaler implements TrafficScaler {
 
     private static final int SCALE_INTERVAL_MAX_1 = 50;
     private static final int SCALE_INTERVAL_MAX_2 = 100;

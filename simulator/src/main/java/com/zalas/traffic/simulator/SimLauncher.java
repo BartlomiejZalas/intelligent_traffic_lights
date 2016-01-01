@@ -3,6 +3,7 @@ package com.zalas.traffic.simulator;
 import com.zalas.traffic.dynamic.controller.DynamicTrafficController;
 import com.zalas.traffic.dynamic.controller.StaticTrafficController;
 import com.zalas.traffic.dynamic.controller.TrafficController;
+import com.zalas.traffic.dynamic.controller.scaler.FourIntervalTrafficScaler;
 import com.zalas.traffic.dynamic.network.NeuralNetwork;
 import com.zalas.traffic.simulator.model.TrafficDirection;
 import com.zalas.traffic.simulator.model.TrafficEvent;
@@ -16,7 +17,7 @@ public class SimLauncher {
 
         TrafficController controller = null;
         if (args[0].equals("dynamic")) {
-            controller = new DynamicTrafficController(NeuralNetwork.load("dynamicNN.nnet"));
+            controller = new DynamicTrafficController(NeuralNetwork.load("dynamicNN.nnet"), new FourIntervalTrafficScaler());
         } else {
             controller = new StaticTrafficController();
         }
@@ -34,7 +35,6 @@ public class SimLauncher {
         trafficSchedule.registerEvent(0, new TrafficEvent(TrafficDirection.EAST, 201));
         trafficSchedule.registerEvent(0, new TrafficEvent(TrafficDirection.SOUTH, 201));
         trafficSchedule.registerEvent(0, new TrafficEvent(TrafficDirection.WEST, 201));
-
         return trafficSchedule;
     }
 

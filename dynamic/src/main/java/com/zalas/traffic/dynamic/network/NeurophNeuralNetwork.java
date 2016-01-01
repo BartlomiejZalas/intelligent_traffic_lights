@@ -13,8 +13,8 @@ public class NeurophNeuralNetwork implements NeuralNetwork, Serializable {
     private DataSet dataSet;
     private org.neuroph.core.NeuralNetwork<BackPropagation> neuralNetwork;
 
-    private static final int MAX_ITERATIONS = 20000;
-    private static final double LEARNING_RATE = 0.01;
+    private static final int MAX_ITERATIONS = 50000;
+    private static final double LEARNING_RATE = 0.003;
     private static final double MAX_ERROR = 0.0001;
 
     public NeurophNeuralNetwork(DataSet dataSet) {

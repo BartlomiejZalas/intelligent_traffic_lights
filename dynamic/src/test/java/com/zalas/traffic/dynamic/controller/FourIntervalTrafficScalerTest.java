@@ -1,17 +1,18 @@
 package com.zalas.traffic.dynamic.controller;
 
+import com.zalas.traffic.dynamic.controller.scaler.FourIntervalTrafficScaler;
 import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-public class TrafficScalerTest {
+public class FourIntervalTrafficScalerTest {
 
-    private TrafficScaler trafficScaler;
+    private FourIntervalTrafficScaler trafficScaler;
 
     @Before
     public void setUp() throws Exception {
-        trafficScaler = new TrafficScaler();
+        trafficScaler = new FourIntervalTrafficScaler();
     }
 
     @Test

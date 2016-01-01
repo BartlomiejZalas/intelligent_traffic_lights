@@ -1,6 +1,7 @@
 package com.zalas.traffic.dynamic;
 
 import com.zalas.traffic.dynamic.controller.DynamicTrafficController;
+import com.zalas.traffic.dynamic.controller.scaler.NoScaleTrafficScaler;
 import com.zalas.traffic.dynamic.data.DataSet;
 import com.zalas.traffic.dynamic.data.DataSetFromCsvCreator;
 import com.zalas.traffic.dynamic.evaluation.DynamicTrafficTester;
@@ -59,7 +60,7 @@ public class Main {
 
     private List<TestResult> testSolution(DataSet dataSet, NeuralNetwork encogNeuralNetwork) {
         System.out.println("Test solution");
-        DynamicTrafficController controller = new DynamicTrafficController(encogNeuralNetwork);
+        DynamicTrafficController controller = new DynamicTrafficController(encogNeuralNetwork, new NoScaleTrafficScaler());
         DynamicTrafficTester tester = new DynamicTrafficTester(dataSet, controller);
         return tester.test();
     }
