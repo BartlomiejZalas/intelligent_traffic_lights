@@ -1,5 +1,6 @@
 package com.zalas.traffic.dynamic.controller;
 
+import com.zalas.traffic.controller.TrafficController;
 import com.zalas.traffic.dynamic.controller.scaler.TrafficScaler;
 import com.zalas.traffic.dynamic.network.NeuralNetwork;
 import com.zalas.traffic.dynamic.normalization.TrafficLevelsNormalizator;

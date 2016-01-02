@@ -1,6 +1,6 @@
 package com.zalas.traffic.simulator;
 
-import com.zalas.traffic.dynamic.controller.TrafficController;
+import com.zalas.traffic.controller.TrafficController;
 import com.zalas.traffic.simulator.model.LightCycle;
 import com.zalas.traffic.simulator.model.TrafficEvent;
 import com.zalas.traffic.simulator.model.TrafficModel;

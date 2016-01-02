@@ -16,6 +16,7 @@
         <module>io</module>
         <module>output</module>
         <module>simulator</module>
+        <module>controller</module>
     </modules>
 
     <properties>

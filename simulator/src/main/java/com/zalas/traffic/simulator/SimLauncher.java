@@ -1,8 +1,8 @@
 package com.zalas.traffic.simulator;
 
+import com.zalas.traffic.controller.TrafficController;
 import com.zalas.traffic.dynamic.controller.DynamicTrafficController;
 import com.zalas.traffic.dynamic.controller.StaticTrafficController;
-import com.zalas.traffic.dynamic.controller.TrafficController;
 import com.zalas.traffic.dynamic.controller.scaler.FourIntervalTrafficScaler;
 import com.zalas.traffic.dynamic.network.NeuralNetwork;
 import com.zalas.traffic.simulator.model.TrafficDirection;
