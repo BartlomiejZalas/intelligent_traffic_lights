@@ -26,6 +26,7 @@ public class SimLauncher {
             TrafficModel trafficModel = new TrafficModel();
 
             Simulator simulator = new Simulator(controller, trafficSchedule, trafficModel);
+
             new SimulatorGUI(simulator).lunch();
         } catch (CmdArgumentsException e) {
             System.out.println(e.getMessage());
