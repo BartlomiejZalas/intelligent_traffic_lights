@@ -1,4 +1,4 @@
-package com.zalas.traffic.simulator;
+package com.zalas.traffic.simulator.controller;
 
 import com.zalas.traffic.controller.TrafficController;
 import com.zalas.traffic.simulator.model.LightCycle;

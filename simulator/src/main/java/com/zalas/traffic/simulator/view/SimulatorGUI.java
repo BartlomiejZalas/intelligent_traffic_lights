@@ -1,7 +1,7 @@
 package com.zalas.traffic.simulator.view;
 
 
-import com.zalas.traffic.simulator.Simulator;
+import com.zalas.traffic.simulator.controller.Simulator;
 
 import javax.swing.*;
 import java.awt.*;
