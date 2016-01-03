@@ -18,7 +18,7 @@ public class ControllerFactory {
             return new StaticTrafficController();
 
         } else if (controllerType.equals("prediction")) {
-            return new StaticTrafficController();
+            throw new IllegalStateException("Not implemented yet!");
         }
         throw new RuntimeException("No such controller type: " + controllerType);
     }
