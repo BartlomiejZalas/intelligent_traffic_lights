@@ -1,5 +1,6 @@
 package com.zalas.traffic.dynamic.light_controller;
 
+import com.zalas.traffic.controller.TrafficController;
 import com.zalas.traffic.dynamic.prediction.network.NeuralNetworkPredictor;
 import com.zalas.traffic.io.csv.CsvLineReader;
 
@@ -9,11 +10,19 @@ import java.util.List;
 
 import static com.zalas.traffic.io.utils.Utils.*;
 
-public class LightController {
+public class PredictionTrafficController  implements TrafficController {
 
     public static void main(String[] args) throws Exception {
-        new LightController().run();
+        new PredictionTrafficController().run();
     }
+
+    @Override
+    public int getLightCycle(int north, int east, int south, int west, int iteration) {
+        String time = TIME_EVENING;
+
+        return 0;
+    }
+
 
     public void run() throws Exception {
         for (String dataFileName : getDataFileNamesForTime(TIME_EVENING)) {
@@ -31,6 +40,5 @@ public class LightController {
         int endElement = historicalData.size();
         return historicalData.subList(startElement, endElement);
     }
-
 
 }

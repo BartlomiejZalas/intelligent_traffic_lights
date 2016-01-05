@@ -20,7 +20,7 @@ public class DynamicTrafficController implements TrafficController {
     }
 
     @Override
-    public int getLightCycle(int north, int east, int south, int west) {
+    public int getLightCycle(int north, int east, int south, int west, int iteration) {
 
         List<Integer> trafficStatus = createListWithScaledDirections(north, east, south, west);
 

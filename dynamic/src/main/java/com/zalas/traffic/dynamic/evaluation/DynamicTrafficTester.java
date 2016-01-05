@@ -26,7 +26,7 @@ public class DynamicTrafficTester {
 
             List<Integer> trafficStatus = convertToIntList(row.getInputs());
             int expectedValue = (int) row.getOutput();
-            int computedValue = controller.getLightCycle(trafficStatus.get(0),trafficStatus.get(1),trafficStatus.get(2),trafficStatus.get(3) );
+            int computedValue = controller.getLightCycle(trafficStatus.get(0),trafficStatus.get(1),trafficStatus.get(2),trafficStatus.get(3), 1);
             boolean wasCorrect = evaluate(expectedValue, computedValue);
 
             results.add(new TestResult(wasCorrect, expectedValue, computedValue));

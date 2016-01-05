@@ -25,7 +25,8 @@ public class Simulator {
                 trafficModel.getTrafficNorth(),
                 trafficModel.getTrafficEast(),
                 trafficModel.getTrafficSouth(),
-                trafficModel.getTrafficWest()
+                trafficModel.getTrafficWest(),
+                trafficModel.getIteration()
         ));
         trafficModel.setLightCycle(lc);
     }
