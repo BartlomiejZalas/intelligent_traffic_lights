@@ -9,6 +9,8 @@ import java.awt.*;
 
 public class SimulatorGUI extends JFrame {
 
+    private JTextField autoIterationsNumberField = new JTextField("0");
+    private JButton quickIterationButton = new JButton("Go");
     private JButton nextLightsButton = new JButton("Change Light Cycle");
     private JButton nextMoveVehiclesButton = new JButton("Move Vehicles");
     private JButton nextIncomingTrafficButton = new JButton("Add Incoming Traffic");
@@ -50,19 +52,31 @@ public class SimulatorGUI extends JFrame {
     private JPanel createQuickIterationPanel() {
         JPanel quickIteration = new JPanel();
         quickIteration.setBackground(Color.white);
-        quickIteration.setBorder(new EmptyBorder(10,10,10,10));
-        quickIteration.setLayout(new GridLayout(3,1));
+        quickIteration.setBorder(new EmptyBorder(10, 10, 10, 10));
+        quickIteration.setLayout(new GridLayout(3, 1));
         quickIteration.add(new JLabel("Go to next iterations:"));
-        quickIteration.add(new JTextField("0"));
-        quickIteration.add(new JButton("Go"));
+        quickIteration.add(autoIterationsNumberField);
+        quickIteration.add(quickIterationButton);
         return quickIteration;
     }
 
     private void addActionToButtons() {
+        nextIncomingTrafficButton.addActionListener(e -> handleIncomingTraffic());
         nextLightsButton.addActionListener(e -> changeLightCycle());
         nextMoveVehiclesButton.addActionListener(e -> moveVehicles());
-        nextIncomingTrafficButton.addActionListener(e -> handleIncomingTraffic());
         nextIteration.addActionListener(e -> startNextIteration());
+        quickIterationButton.addActionListener(e -> doAutoIterations());
+    }
+
+    private void doAutoIterations() {
+        int iterationsToDo = Integer.parseInt(autoIterationsNumberField.getText());
+        for (int i = 0; i < iterationsToDo; i++) {
+            handleIncomingTraffic();
+            changeLightCycle();
+            moveVehicles();
+            startNextIteration();
+        }
+
     }
 
     private JPanel createStatsPanel() {
