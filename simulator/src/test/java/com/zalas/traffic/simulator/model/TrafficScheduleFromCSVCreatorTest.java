@@ -1,5 +1,6 @@
 package com.zalas.traffic.simulator.model;
 
+import com.zalas.traffic.domain.TrafficDirection;
 import com.zalas.traffic.io.csv.CsvLineReader;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.google.common.collect.Lists.newArrayList;
-import static com.zalas.traffic.simulator.model.TrafficDirection.*;
+import static com.zalas.traffic.domain.TrafficDirection.*;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.BDDMockito.given;
 

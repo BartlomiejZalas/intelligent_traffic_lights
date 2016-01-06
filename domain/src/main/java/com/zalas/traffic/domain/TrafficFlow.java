@@ -1,4 +1,4 @@
-package com.zalas.traffic.simulator.model;
+package com.zalas.traffic.domain;
 
 public class TrafficFlow {
 

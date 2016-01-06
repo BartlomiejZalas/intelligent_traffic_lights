@@ -17,6 +17,7 @@
         <module>output</module>
         <module>simulator</module>
         <module>controller</module>
+        <module>domain</module>
     </modules>
 
     <properties>

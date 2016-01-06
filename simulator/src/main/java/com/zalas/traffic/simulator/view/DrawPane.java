@@ -1,15 +1,15 @@
 package com.zalas.traffic.simulator.view;
 
-import com.zalas.traffic.simulator.model.LightCycle;
-import com.zalas.traffic.simulator.model.TrafficDirection;
-import com.zalas.traffic.simulator.model.TrafficFlow;
-import com.zalas.traffic.simulator.model.TrafficModel;
+import com.zalas.traffic.domain.LightCycle;
+import com.zalas.traffic.domain.TrafficDirection;
+import com.zalas.traffic.domain.TrafficFlow;
+import com.zalas.traffic.domain.TrafficModel;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.HashMap;
 
-import static com.zalas.traffic.simulator.model.TrafficDirection.*;
+import static com.zalas.traffic.domain.TrafficDirection.*;
 
 public class DrawPane extends JPanel {
 

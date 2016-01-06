@@ -2,6 +2,7 @@ package com.zalas.traffic.dynamic.light_controller;
 
 import com.google.common.collect.ImmutableMap;
 import com.zalas.traffic.controller.TrafficController;
+import com.zalas.traffic.domain.TrafficModel;
 import com.zalas.traffic.dynamic.controller.DynamicTrafficController;
 import com.zalas.traffic.dynamic.prediction.network.NeuralNetworkPredictor;
 import com.zalas.traffic.io.csv.CsvLineReader;
@@ -21,16 +22,16 @@ public class PredictionTrafficController implements TrafficController {
 
     public static final int NUMBER_OF_INPUTS = 100;
     private final IterationToTimeMapper iterationToTimeMapper;
-    private final List<List<Double>> realTraffic;
+    private final TrafficModel currentTrafficModel;
     private final DynamicTrafficController dynamicTrafficController;
     private final Map<String, Map<String, NeuralNetworkPredictor>> predictorsToTime = new HashMap<>();
     private final Map<String, Map<String, List<Double>>> historicalDataToTime = new HashMap<>();
 
-    public PredictionTrafficController(IterationToTimeMapper iterationToTimeMapper, List<List<Double>> realTraffic,
+    public PredictionTrafficController(IterationToTimeMapper iterationToTimeMapper, TrafficModel currentTrafficModel,
                                        DynamicTrafficController dynamicTrafficController) throws Exception {
 
         this.iterationToTimeMapper = iterationToTimeMapper;
-        this.realTraffic = realTraffic;
+        this.currentTrafficModel = currentTrafficModel;
         this.dynamicTrafficController = dynamicTrafficController;
 
         predictorsToTime.put(TIME_MORNING, createMapDirectionToPredictor(TIME_MORNING));
@@ -49,18 +50,19 @@ public class PredictionTrafficController implements TrafficController {
             String time = iterationToTimeMapper.map(iteration);
             Map<String, NeuralNetworkPredictor> directionToPredictor = predictorsToTime.get(time);
             Map<String, Integer> trafficPredictions = newHashMap();
-
+            System.out.println("**********************");
             for (String direction : newArrayList(STREET_NORTH, STREET_EAST, STREET_SOUTH, STREET_WEST)) {
                 NeuralNetworkPredictor predictor = directionToPredictor.get(direction);
                 List<Double> historicalData = historicalDataToTime.get(time).get(direction);
 
                 Double predictedTraffic = predictor.getPrediction(convertListToArray(historicalData));
-                Double realTraffic = getRealTrafficForIteration(iteration, direction);
+                int realTraffic = getRealTrafficForIteration(iteration, direction);
 
                 trafficPredictions.put(direction, ((int) (predictedTraffic + realTraffic) / 2));
 
-                System.out.println(direction + ": " + getRealTrafficForIteration(iteration + 1, direction) + "," + predictedTraffic);
+//                System.out.println("Prediciotn:"+direction + ": " + getRealTrafficForIteration(iteration + 1, direction) + "," + predictedTraffic);
                 updateHistoricalData(realTraffic, historicalData);
+                System.out.println("Input to DC "+direction+":"+realTraffic+"+"+predictedTraffic+"="+trafficPredictions.get(direction));
 
             }
 
@@ -77,29 +79,29 @@ public class PredictionTrafficController implements TrafficController {
         return lightCycle;
     }
 
-    private void updateHistoricalData(Double realTraffic, List<Double> historicalData) {
+    private void updateHistoricalData(int realTraffic, List<Double> historicalData) {
         historicalData.remove(0);
-        historicalData.add(realTraffic);
+        historicalData.add((double)realTraffic);
     }
 
     private File getFileWithHistoricalData(String time, String direction) throws URISyntaxException {
         return new File(getClass().getResource("/data/" + direction + "-" + time + ".csv").toURI());
     }
 
-    private Double getRealTrafficForIteration(int iteration, String traffic) {
+    private int getRealTrafficForIteration(int iteration, String traffic) {
         try {
             switch (traffic) {
                 case STREET_NORTH:
-                    return realTraffic.get(iteration).get(0);
+                    return currentTrafficModel.getTrafficNorth();
                 case STREET_EAST:
-                    return realTraffic.get(iteration).get(1);
+                    return currentTrafficModel.getTrafficEast();
                 case STREET_SOUTH:
-                    return realTraffic.get(iteration).get(2);
+                    return currentTrafficModel.getTrafficSouth();
                 case STREET_WEST:
-                    return realTraffic.get(iteration).get(3);
+                    return currentTrafficModel.getTrafficWest();
             }
         } catch (IndexOutOfBoundsException e) {
-            return 0.;
+            return 0;
         }
         throw new PredictionException("Cannot get traffic for iteration: " + iteration);
     }

@@ -1,9 +1,9 @@
 package com.zalas.traffic.simulator.business;
 
 import com.zalas.traffic.controller.TrafficController;
-import com.zalas.traffic.simulator.model.LightCycle;
+import com.zalas.traffic.domain.LightCycle;
+import com.zalas.traffic.domain.TrafficModel;
 import com.zalas.traffic.simulator.model.TrafficEvent;
-import com.zalas.traffic.simulator.model.TrafficModel;
 import com.zalas.traffic.simulator.model.TrafficSchedule;
 
 import java.util.List;

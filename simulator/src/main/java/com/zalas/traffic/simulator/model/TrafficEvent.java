@@ -1,5 +1,7 @@
 package com.zalas.traffic.simulator.model;
 
+import com.zalas.traffic.domain.TrafficDirection;
+
 public class TrafficEvent {
 
     TrafficDirection trafficDirection;

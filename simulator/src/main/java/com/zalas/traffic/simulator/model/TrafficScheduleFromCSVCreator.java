@@ -6,7 +6,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import static com.zalas.traffic.simulator.model.TrafficDirection.*;
+import static com.zalas.traffic.domain.TrafficDirection.*;
+
 
 public class TrafficScheduleFromCSVCreator {
 

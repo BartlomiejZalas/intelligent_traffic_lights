@@ -1,9 +1,11 @@
 package com.zalas.traffic.simulator.main;
 
 import com.zalas.traffic.controller.TrafficController;
+import com.zalas.traffic.domain.TrafficModel;
 import com.zalas.traffic.io.csv.CsvLineReader;
 import com.zalas.traffic.simulator.business.Simulator;
-import com.zalas.traffic.simulator.model.*;
+import com.zalas.traffic.simulator.model.TrafficSchedule;
+import com.zalas.traffic.simulator.model.TrafficScheduleFromCSVCreator;
 import com.zalas.traffic.simulator.view.SimulatorGUI;
 import org.apache.commons.cli.HelpFormatter;
 
@@ -21,9 +23,9 @@ public class SimLauncher {
         try {
             CmdArguments cmdArguments = argsParser.parse(args);
 
-            TrafficController controller = controllerFactory.create(cmdArguments.getControllerType(), cmdArguments.getScenarioPath());
-            TrafficSchedule trafficSchedule = scheduleCreator.createSchedule(cmdArguments.getScenarioPath());
             TrafficModel trafficModel = new TrafficModel();
+            TrafficController controller = controllerFactory.create(cmdArguments.getControllerType(), cmdArguments.getScenarioPath(), trafficModel);
+            TrafficSchedule trafficSchedule = scheduleCreator.createSchedule(cmdArguments.getScenarioPath());
 
             Simulator simulator = new Simulator(controller, trafficSchedule, trafficModel);
 
