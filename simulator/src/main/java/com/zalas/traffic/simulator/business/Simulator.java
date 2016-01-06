@@ -9,7 +9,7 @@ import com.zalas.traffic.simulator.model.TrafficSchedule;
 import java.util.List;
 
 public class Simulator {
-    private static final int VEHICLES_MOVED = 50;
+    private static final int VEHICLES_MOVED = 250;
     private final TrafficController controller;
     private final TrafficSchedule trafficSchedule;
     private final TrafficModel trafficModel;
