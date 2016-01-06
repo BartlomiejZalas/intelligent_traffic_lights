@@ -21,7 +21,7 @@ public class SimLauncher {
         try {
             CmdArguments cmdArguments = argsParser.parse(args);
 
-            TrafficController controller = controllerFactory.create(cmdArguments.getControllerType());
+            TrafficController controller = controllerFactory.create(cmdArguments.getControllerType(), cmdArguments.getScenarioPath());
             TrafficSchedule trafficSchedule = scheduleCreator.createSchedule(cmdArguments.getScenarioPath());
             TrafficModel trafficModel = new TrafficModel();
 

@@ -11,17 +11,22 @@ import static org.apache.commons.lang3.ArrayUtils.toPrimitive;
 
 public class Utils {
 
-    public static final String TIME_EVENING = "evening";
     public static final String TIME_MORNING = "morning";
     public static final String TIME_AFTERNOON = "afternoon";
+    public static final String TIME_EVENING = "evening";
     public static final String[] TIMES_OF_DAY = new String[]{TIME_MORNING, TIME_AFTERNOON, TIME_EVENING};
 
-    public static final String[] STREETS = new String[]{"broniewskiegoN", "broniewskiegoS", "glowna", "kusocinskiego"};
+
+    public static final String STREET_NORTH = "broniewskiegoN";
+    public static final String STREET_EAST = "glowna";
+    public static final String STREET_SOUTH = "broniewskiegoS";
+    public static final String STREET_WEST = "kusocinskiego";
+    public static final String[] STREETS = new String[]{STREET_NORTH, STREET_EAST, STREET_SOUTH, STREET_WEST};
     public static final int COLUMN_WITH_VALUES = 1;
 
     public static String getNetworksOutputDirectory() throws IOException {
         Properties p = loadProperties();
-        return p.getProperty("target") + File.separator + p.getProperty("network_output_dirname") + File.separator;
+        return p.getProperty("target") + File.separator + "networks" + File.separator;
     }
 
     public static String getNetworksAccuracyOutputDirectory() throws IOException {
