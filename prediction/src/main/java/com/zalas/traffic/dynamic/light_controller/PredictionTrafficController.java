@@ -87,18 +87,19 @@ public class PredictionTrafficController implements TrafficController {
     }
 
     private Double getRealTrafficForIteration(int iteration, String traffic) {
-        try {switch (traffic) {
-            case STREET_NORTH:
-                return realTraffic.get(iteration).get(0);
-            case STREET_EAST:
-                return realTraffic.get(iteration).get(1);
-            case STREET_SOUTH:
-                return realTraffic.get(iteration).get(2);
-            case STREET_WEST:
-                return realTraffic.get(iteration).get(3);
-        }
+        try {
+            switch (traffic) {
+                case STREET_NORTH:
+                    return realTraffic.get(iteration).get(0);
+                case STREET_EAST:
+                    return realTraffic.get(iteration).get(1);
+                case STREET_SOUTH:
+                    return realTraffic.get(iteration).get(2);
+                case STREET_WEST:
+                    return realTraffic.get(iteration).get(3);
+            }
         } catch (IndexOutOfBoundsException e) {
-            throw new RuntimeException("Error: No scenario for iteration: " +iteration);
+            return 0.;
         }
         throw new PredictionException("Cannot get traffic for iteration: " + iteration);
     }

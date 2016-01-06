@@ -21,18 +21,15 @@ public class Simulator {
     }
 
     public void changeLightCycle() {
-        try {
-            LightCycle lc = LightCycle.getByNumber(controller.getLightCycle(
-                    trafficModel.getTrafficNorth(),
-                    trafficModel.getTrafficEast(),
-                    trafficModel.getTrafficSouth(),
-                    trafficModel.getTrafficWest(),
-                    trafficModel.getIteration()
-            ));
-            trafficModel.setLightCycle(lc);
-        } catch (Exception e) {
-            System.err.println(e.getMessage());
-        }
+        LightCycle lc = LightCycle.getByNumber(controller.getLightCycle(
+                trafficModel.getTrafficNorth(),
+                trafficModel.getTrafficEast(),
+                trafficModel.getTrafficSouth(),
+                trafficModel.getTrafficWest(),
+                trafficModel.getIteration()
+        ));
+        trafficModel.setLightCycle(lc);
+
     }
 
     public void moveVehicles() {
