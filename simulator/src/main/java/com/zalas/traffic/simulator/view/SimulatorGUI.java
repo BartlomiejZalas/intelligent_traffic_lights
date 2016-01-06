@@ -4,6 +4,7 @@ package com.zalas.traffic.simulator.view;
 import com.zalas.traffic.simulator.business.Simulator;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
 public class SimulatorGUI extends JFrame {
@@ -29,13 +30,32 @@ public class SimulatorGUI extends JFrame {
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.getContentPane().add(drawPane, BorderLayout.CENTER);
         frame.getContentPane().add(createButtonsPanel(), BorderLayout.SOUTH);
-        frame.getContentPane().add(createStatsPanel(), BorderLayout.EAST);
+        frame.getContentPane().add(createEastPanel(), BorderLayout.EAST);
         frame.pack();
         frame.setVisible(true);
 
         addActionToButtons();
         enableButton(nextIncomingTrafficButton);
 
+    }
+
+    private JPanel createEastPanel() {
+        JPanel eastPanel = new JPanel();
+        eastPanel.setLayout(new BorderLayout());
+        eastPanel.add(createStatsPanel(), BorderLayout.CENTER);
+        eastPanel.add(createQuickIterationPanel(), BorderLayout.SOUTH);
+        return eastPanel;
+    }
+
+    private JPanel createQuickIterationPanel() {
+        JPanel quickIteration = new JPanel();
+        quickIteration.setBackground(Color.white);
+        quickIteration.setBorder(new EmptyBorder(10,10,10,10));
+        quickIteration.setLayout(new GridLayout(3,1));
+        quickIteration.add(new JLabel("Go to next iterations:"));
+        quickIteration.add(new JTextField("0"));
+        quickIteration.add(new JButton("Go"));
+        return quickIteration;
     }
 
     private void addActionToButtons() {
@@ -55,6 +75,7 @@ public class SimulatorGUI extends JFrame {
 
     private JPanel createButtonsPanel() {
         JPanel buttons = new JPanel();
+        buttons.setLayout(new GridLayout());
         buttons.add(nextIncomingTrafficButton);
         buttons.add(nextLightsButton);
         buttons.add(nextMoveVehiclesButton);
