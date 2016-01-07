@@ -18,6 +18,7 @@
         <module>simulator</module>
         <module>controller</module>
         <module>domain</module>
+        <module>supervisor</module>
     </modules>
 
     <properties>

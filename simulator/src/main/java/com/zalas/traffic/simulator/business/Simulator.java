@@ -2,6 +2,7 @@ package com.zalas.traffic.simulator.business;
 
 import com.zalas.traffic.controller.TrafficController;
 import com.zalas.traffic.domain.LightCycle;
+import com.zalas.traffic.domain.TrafficFlow;
 import com.zalas.traffic.domain.TrafficModel;
 import com.zalas.traffic.simulator.model.TrafficEvent;
 import com.zalas.traffic.simulator.model.TrafficSchedule;
@@ -13,11 +14,13 @@ public class Simulator {
     private final TrafficController controller;
     private final TrafficSchedule trafficSchedule;
     private final TrafficModel trafficModel;
+    private final MoveVehiclesStrategy moveVehiclesStrategy;
 
-    public Simulator(TrafficController controller, TrafficSchedule trafficSchedule, TrafficModel trafficModel) {
+    public Simulator(TrafficController controller, TrafficSchedule trafficSchedule, TrafficModel trafficModel, MoveVehiclesStrategy moveVehiclesStrategy) {
         this.controller = controller;
         this.trafficSchedule = trafficSchedule;
         this.trafficModel = trafficModel;
+        this.moveVehiclesStrategy = moveVehiclesStrategy;
     }
 
     public void changeLightCycle() {
@@ -33,8 +36,9 @@ public class Simulator {
     }
 
     public void moveVehicles() {
-        trafficModel.getLightCycle().getTrafficFlows().stream()
-                .forEach(flow -> trafficModel.decreaseDirection(flow.getFrom(), VEHICLES_MOVED));
+        for (TrafficFlow flow : trafficModel.getLightCycle().getTrafficFlows()) {
+            moveVehiclesStrategy.moveVehicles(trafficModel, flow, VEHICLES_MOVED);
+        }
     }
 
     public void handleTraffic() {

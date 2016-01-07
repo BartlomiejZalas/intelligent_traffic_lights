@@ -27,17 +27,18 @@ public class SimulatorGUI extends JFrame {
     }
 
     public void lunch() {
+        SwingUtilities.invokeLater(() -> {
+            JFrame frame = new JFrame("Traffic Simulator :: " + simulator.getControllerType());
+            frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+            frame.getContentPane().add(drawPane, BorderLayout.CENTER);
+            frame.getContentPane().add(createButtonsPanel(), BorderLayout.SOUTH);
+            frame.getContentPane().add(createEastPanel(), BorderLayout.EAST);
+            frame.pack();
+            frame.setVisible(true);
 
-        JFrame frame = new JFrame("Traffic Simulator :: " + simulator.getControllerType());
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        frame.getContentPane().add(drawPane, BorderLayout.CENTER);
-        frame.getContentPane().add(createButtonsPanel(), BorderLayout.SOUTH);
-        frame.getContentPane().add(createEastPanel(), BorderLayout.EAST);
-        frame.pack();
-        frame.setVisible(true);
-
-        addActionToButtons();
-        enableButton(nextIncomingTrafficButton);
+            addActionToButtons();
+            enableButton(nextIncomingTrafficButton);
+        });
 
     }
 

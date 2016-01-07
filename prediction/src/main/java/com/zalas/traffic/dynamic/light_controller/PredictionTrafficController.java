@@ -45,12 +45,12 @@ public class PredictionTrafficController implements TrafficController {
 
     @Override
     public int getLightCycle(int north, int east, int south, int west, int iteration) {
+        System.out.println("**********************");
         int lightCycle = -1;
         try {
             String time = iterationToTimeMapper.map(iteration);
             Map<String, NeuralNetworkPredictor> directionToPredictor = predictorsToTime.get(time);
             Map<String, Integer> trafficPredictions = newHashMap();
-            System.out.println("**********************");
             for (String direction : newArrayList(STREET_NORTH, STREET_EAST, STREET_SOUTH, STREET_WEST)) {
                 NeuralNetworkPredictor predictor = directionToPredictor.get(direction);
                 List<Double> historicalData = historicalDataToTime.get(time).get(direction);
@@ -59,11 +59,9 @@ public class PredictionTrafficController implements TrafficController {
                 int realTraffic = getRealTrafficForIteration(iteration, direction);
 
                 trafficPredictions.put(direction, ((int) (predictedTraffic + realTraffic) / 2));
-
-//                System.out.println("Prediciotn:"+direction + ": " + getRealTrafficForIteration(iteration + 1, direction) + "," + predictedTraffic);
                 updateHistoricalData(realTraffic, historicalData);
-                System.out.println("Input to DC "+direction+":"+realTraffic+"+"+predictedTraffic+"="+trafficPredictions.get(direction));
 
+                System.out.println("Input to DC "+direction+":"+realTraffic+"+"+predictedTraffic+"="+trafficPredictions.get(direction));
             }
 
             lightCycle = dynamicTrafficController.getLightCycle(
