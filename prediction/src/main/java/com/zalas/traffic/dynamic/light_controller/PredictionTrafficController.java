@@ -2,6 +2,7 @@ package com.zalas.traffic.dynamic.light_controller;
 
 import com.google.common.collect.ImmutableMap;
 import com.zalas.traffic.controller.TrafficController;
+import com.zalas.traffic.domain.TrafficDirection;
 import com.zalas.traffic.domain.TrafficModel;
 import com.zalas.traffic.dynamic.controller.DynamicTrafficController;
 import com.zalas.traffic.dynamic.prediction.network.NeuralNetworkPredictor;
@@ -75,6 +76,11 @@ public class PredictionTrafficController implements TrafficController {
             throw new RuntimeException(e);
         }
         return lightCycle;
+    }
+
+    @Override
+    public void amplify(int iteration, TrafficDirection directionInNeighbourToThis) {
+        dynamicTrafficController.amplify(iteration, directionInNeighbourToThis);
     }
 
     private void updateHistoricalData(int realTraffic, List<Double> historicalData) {

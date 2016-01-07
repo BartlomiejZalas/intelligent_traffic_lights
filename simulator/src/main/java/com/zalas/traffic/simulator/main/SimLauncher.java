@@ -45,8 +45,8 @@ public class SimLauncher {
         new SimulatorGUI(simulator).lunch();
     }
 
-    public TrafficSchedule getTrafficSchedule() {
-        return trafficSchedule;
+    public TrafficController getController() {
+        return controller;
     }
 
     public void setMoveVehiclesStrategy(MoveVehiclesStrategy moveVehiclesStrategy) {

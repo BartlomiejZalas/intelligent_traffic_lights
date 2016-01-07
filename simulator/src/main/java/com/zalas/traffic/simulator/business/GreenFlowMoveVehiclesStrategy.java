@@ -1,40 +1,31 @@
 package com.zalas.traffic.simulator.business;
 
+import com.zalas.traffic.controller.TrafficController;
 import com.zalas.traffic.domain.TrafficDirection;
 import com.zalas.traffic.domain.TrafficFlow;
 import com.zalas.traffic.domain.TrafficModel;
-import com.zalas.traffic.simulator.model.TrafficEvent;
-import com.zalas.traffic.simulator.model.TrafficSchedule;
 
 public class GreenFlowMoveVehiclesStrategy implements MoveVehiclesStrategy {
 
-    private TrafficSchedule neighbourTrafficSchedule;
+    private TrafficController neighbourController;
     private TrafficDirection directionToNeighbour;
-    private TrafficDirection directionFromNeighbour;
+    private TrafficDirection directionInNeighbourToThis;
 
-    public GreenFlowMoveVehiclesStrategy(TrafficSchedule neighbourTrafficSchedule,
+    public GreenFlowMoveVehiclesStrategy(TrafficController neighbourController,
                                          TrafficDirection directionToNeighbour,
                                          TrafficDirection directionFromNeighbour) {
-        this.neighbourTrafficSchedule = neighbourTrafficSchedule;
+        this.neighbourController = neighbourController;
         this.directionToNeighbour = directionToNeighbour;
-        this.directionFromNeighbour = directionFromNeighbour;
+        this.directionInNeighbourToThis = directionFromNeighbour;
     }
 
     @Override
     public void moveVehicles(TrafficModel trafficModel, TrafficFlow flow, int vehiclesMoved) {
         if (flow.getTo() == directionToNeighbour) {
-            int trafficMoved = getTrafficMoved(trafficModel.getTrafficForDirection(flow.getFrom()), vehiclesMoved);
-            TrafficEvent event = new TrafficEvent(directionFromNeighbour, 50);
-            neighbourTrafficSchedule.registerEvent(trafficModel.getIteration() + 1, event);
-            System.out.println("Registering in  neighbour schedule for iteration: "+(trafficModel.getIteration() + 1)+"event: "+event );
+            neighbourController.amplify(trafficModel.getIteration() + 1, directionInNeighbourToThis);
+            System.out.println("Amplifying neighbour direction: "+directionInNeighbourToThis);
         }
         trafficModel.decreaseDirection(flow.getFrom(), vehiclesMoved);
     }
 
-    private int getTrafficMoved(int currentTraffic, int vehiclesMoved) {
-        if (currentTraffic > vehiclesMoved) {
-            return vehiclesMoved;
-        }
-        return currentTraffic;
-    }
 }

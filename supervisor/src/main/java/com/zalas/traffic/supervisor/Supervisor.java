@@ -15,9 +15,9 @@ public class Supervisor {
         SimLauncher sim2 = new SimLauncher(simArgs2);
 
         GreenFlowMoveVehiclesStrategy greenFlowMoveVehiclesStrategy1 =
-                new GreenFlowMoveVehiclesStrategy(sim2.getTrafficSchedule(), EAST, WEST);
+                new GreenFlowMoveVehiclesStrategy(sim2.getController(), EAST, WEST);
         GreenFlowMoveVehiclesStrategy greenFlowMoveVehiclesStrategy2 =
-                new GreenFlowMoveVehiclesStrategy(sim1.getTrafficSchedule(), WEST, EAST);
+                new GreenFlowMoveVehiclesStrategy(sim1.getController(), WEST, EAST);
 
         sim1.setMoveVehiclesStrategy(greenFlowMoveVehiclesStrategy1);
         sim2.setMoveVehiclesStrategy(greenFlowMoveVehiclesStrategy2);

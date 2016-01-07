@@ -114,18 +114,4 @@ public class TrafficModel {
         }
         return currentTraffic - vehiclesMoved;
     }
-
-    public int getTrafficForDirection(TrafficDirection trafficDirection) {
-        switch (trafficDirection) {
-            case EAST:
-                return trafficEast;
-            case WEST:
-                return trafficWest;
-            case NORTH:
-                return trafficNorth;
-            case SOUTH:
-                return trafficSouth;
-        }
-        throw new RuntimeException("Cannot find current traffic for: " + trafficDirection);
-    }
 }
