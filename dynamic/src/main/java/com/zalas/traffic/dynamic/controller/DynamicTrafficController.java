@@ -32,7 +32,7 @@ public class DynamicTrafficController implements TrafficController {
 
         amplifyWhenNeeded(trafficStatus, iteration);
 
-        System.out.println("INputs for network:" + trafficStatus);
+        System.out.println("Inputs for network:" + trafficStatus);
 
         double[] inputs = new double[4];
         for (int direction = 0; direction < trafficStatus.size(); direction++) {
@@ -47,17 +47,24 @@ public class DynamicTrafficController implements TrafficController {
         if (directionToAmp == null) return;
 
         if (directionToAmp == NORTH) {
-            trafficStatus.set(0, trafficStatus.get(0) + 1);
+            trafficStatus.set(0, amplify(trafficStatus.get(0)));
         }
         if (directionToAmp == EAST) {
-            trafficStatus.set(1, trafficStatus.get(1) + 1);
+            trafficStatus.set(1, amplify(trafficStatus.get(1)));
         }
         if (directionToAmp == SOUTH) {
-            trafficStatus.set(2, trafficStatus.get(2) + 1);
+            trafficStatus.set(2, amplify(trafficStatus.get(2)));
         }
         if (directionToAmp == WEST) {
-            trafficStatus.set(3, trafficStatus.get(3) + 1);
+            trafficStatus.set(3, amplify(trafficStatus.get(3)));
         }
+    }
+
+    private int amplify(Integer trafficStatus) {
+        if (trafficStatus == 4) {
+            return trafficStatus;
+        }
+        return trafficStatus + 1;
     }
 
     @Override
