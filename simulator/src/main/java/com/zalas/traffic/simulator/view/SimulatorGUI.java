@@ -1,6 +1,7 @@
 package com.zalas.traffic.simulator.view;
 
 
+import com.zalas.traffic.domain.TrafficModel;
 import com.zalas.traffic.simulator.business.Simulator;
 
 import javax.swing.*;
@@ -133,10 +134,15 @@ public class SimulatorGUI extends JFrame {
     }
 
     private void updateStatsTable() {
-        statsTable.setIteration(simulator.getTrafficModel().getIteration());
-        statsTable.setTrafficNorth(simulator.getTrafficModel().getTrafficNorth());
-        statsTable.setTrafficEast(simulator.getTrafficModel().getTrafficEast());
-        statsTable.setTrafficSouth(simulator.getTrafficModel().getTrafficSouth());
-        statsTable.setTrafficWest(simulator.getTrafficModel().getTrafficWest());
+        TrafficModel trafficModel = simulator.getTrafficModel();
+        statsTable.setIteration(trafficModel.getIteration());
+        statsTable.setTrafficNorth(trafficModel.getTrafficNorth());
+        statsTable.setTrafficEast(trafficModel.getTrafficEast());
+        statsTable.setTrafficSouth(trafficModel.getTrafficSouth());
+        statsTable.setTrafficWest(trafficModel.getTrafficWest());
+        trafficModel.updateMaxJamIfMax(trafficModel.getTrafficNorth(), trafficModel.getTrafficEast(),
+                trafficModel.getTrafficSouth(), trafficModel.getTrafficWest());
+        statsTable.setMaxJam(trafficModel.getMaxJam());
+        statsTable.setTotalTrafficLeft(trafficModel.getTotalTrafficLeft());
     }
 }

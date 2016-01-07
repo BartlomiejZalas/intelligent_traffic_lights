@@ -12,12 +12,14 @@ public class StatsTable extends JTable {
     private static final int ROW_TRAFFIC_EAST = 2;
     private static final int ROW_TRAFFIC_SOUTH = 3;
     private static final int ROW_TRAFFIC_WEST = 4;
+    private static final int ROW_TOTAL_TRAFFIC_LEFT = 4;
+    private static final int ROW_MAX_JAM = 5;
 
     private static final int COLUMN_ITEM = 0;
     private static final int COLUMN_VALUE = 1;
 
     public StatsTable() {
-        super(new DefaultTableModel(COLUMN_NAMES, 5));
+        super(new DefaultTableModel(COLUMN_NAMES, 6));
         tableSetup();
         setVisible(true);
     }
@@ -38,6 +40,8 @@ public class StatsTable extends JTable {
         this.setValueAt("Traffic E: ", ROW_TRAFFIC_EAST, COLUMN_ITEM);
         this.setValueAt("Traffic S: ", ROW_TRAFFIC_SOUTH, COLUMN_ITEM);
         this.setValueAt("Traffic W: ", ROW_TRAFFIC_WEST, COLUMN_ITEM);
+        this.setValueAt("Total Traffic Left: ", ROW_TOTAL_TRAFFIC_LEFT, COLUMN_ITEM);
+        this.setValueAt("Max Jam: ", ROW_MAX_JAM, COLUMN_ITEM);
 
         this.getTableHeader().setReorderingAllowed(false);
     }
@@ -62,5 +66,11 @@ public class StatsTable extends JTable {
         this.setValueAt(traffic, ROW_TRAFFIC_WEST, COLUMN_VALUE);
     }
 
+    public void setTotalTrafficLeft(int traffic) {
+        this.setValueAt(traffic, ROW_TOTAL_TRAFFIC_LEFT, COLUMN_VALUE);
+    }
 
+    public void setMaxJam(int maxJam) {
+        this.setValueAt(maxJam, ROW_MAX_JAM, COLUMN_VALUE);
+    }
 }

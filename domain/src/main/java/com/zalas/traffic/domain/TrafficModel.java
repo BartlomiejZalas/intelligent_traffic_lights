@@ -1,5 +1,7 @@
 package com.zalas.traffic.domain;
 
+import static java.lang.Math.*;
+
 public class TrafficModel {
 
     private int iteration;
@@ -9,6 +11,7 @@ public class TrafficModel {
     private int trafficSouth;
     private int trafficWest;
     private LightCycle lightCycle;
+    private int maxJam;
 
     public LightCycle getLightCycle() {
         return lightCycle;
@@ -113,5 +116,17 @@ public class TrafficModel {
             return 0;
         }
         return currentTraffic - vehiclesMoved;
+    }
+
+    public void updateMaxJamIfMax(int north, int east, int south, int west) {
+        this.maxJam = max(north, max(east, max(south, max(west, maxJam))));
+    }
+
+    public int getMaxJam() {
+        return maxJam;
+    }
+
+    public int getTotalTrafficLeft() {
+        return trafficNorth + trafficEast + trafficSouth + trafficWest;
     }
 }
